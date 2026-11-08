@@ -3,21 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeoValues</title>
+    <title>HyperValues</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/svg" href="icon.svg">
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
     <script src="theme.js"></script>
 </head>
 <body>
     <div class="main-container">
     <div class="question-container">
-        <h2 id="question">You will be presented with a series of questions. For each one, click the button with your opinion on it.</h2>
+        <h2 id="question">You will see a list of categories. In each one, click "Add new value" and answer its questions with your opinion. You can add several values per category and click any value to say how much it matches you, from -1 (opposite) to +1 (match). Your closest ideologies update as you go.</h2>
     </div>
     
     <div id="buttons">
-        <button onclick="location.href='quiz.html'">Continue</button>
+        <button onclick="startQuiz()">Continue</button>
         <button onclick="location.href='index.html'">Back</button>
     </div>
     </div>
+    <script>
+        // a new quiz starts with an empty list
+        function startQuiz() {
+            try {
+                localStorage.removeItem('quizAnswers');
+                localStorage.removeItem('quizResults');
+            } catch (e) { /* storage is not available */ }
+            location.href = 'results.html';
+        }
+    </script>
 </body>
 </html>

@@ -3,157 +3,211 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeoValues</title>
+    <title>HyperValues</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/svg" href="icon.svg">
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
     <script src="theme.js"></script>
+    <script src="linebreak.js"></script>
 </head>
 <body>
     <div class="main-container">
-    <div class="main-results-wrapper">
-        <div class="top-section">
-            <div class="title-container">
-                <h1>NeoValues</h1>
-                <span class="version-text">v3.5</span>
-            </div>
-            <div id="results-container"></div>
+        <div class="title-container">
+            <h1>HyperValues</h1>
+            <span class="version-text">v3.9</span>
         </div>
-        
-        <div class="bottom-section">
-            <div id="label"></div>
-            
-            <div id="secondary-label"></div>
 
-            <p class="intro-text results-instruction">
-                Click on any icon or label to view its description and original source.
-            </p>
-            
-            <div id="buttons" style="margin-top: 30px;">
-                <button onclick="location.href='index.html'">Back to menu</button>
+        <div id="values-container" class="category-list"></div>
+
+        <div id="results-panel" class="results-panel" style="display: none;">
+            <div id="label"></div>
+            <div id="closest-section" style="display: none;">
+                <p class="closest-heading">Next closest matches</p>
+                <div id="closest-list"></div>
             </div>
+        </div>
+
+        <div class="button-container">
+            <button id="clear-button" style="display: none;">Clear all</button>
+            <button onclick="location.href='index.html'">Back to menu</button>
         </div>
     </div>
 
     <script src="data.js"></script>
+    <script src="embedding_weights.js"></script>
+    <script src="scoring.js"></script>
     <script>
-        const results = JSON.parse(localStorage.getItem('quizResults') || '{}');
-        const container = document.getElementById('results-container');
-        const userResults = Object.values(results);
+        const CLOSEST_COUNT = 3;
+        let answers = HV.loadAnswers();
 
-        categories.forEach(category => {
-            const resultValue = results[category];
-            if (resultValue) {
-                const wrapper = document.createElement('a');
-                wrapper.className = 'result-item';
-                wrapper.href = `description.html?id=${resultValue}&cat=${category}`;
-                wrapper.style.textDecoration = 'none';
-                wrapper.style.color = 'inherit';
+        const byId = id => document.getElementById(id);
+        const nameOf = (category, value) => (resultsMapping[category] && resultsMapping[category][value])
+            ? resultsMapping[category][value]
+            : value.replace(/_/g, ' ');
 
-                const img = document.createElement('img');
-                img.src = `icons/${category}/${resultValue}.svg`;
-                img.className = 'result-icon';
-                img.onerror = () => { img.style.display = 'none'; };
+        function makeTile(href, title) {
+            const tile = document.createElement('a');
+            tile.className = 'result-item';
+            tile.href = href;
+            tile.style.textDecoration = 'none';
+            tile.style.color = 'inherit';
+            if (title) tile.title = title;
+            return tile;
+        }
 
-                const name = document.createElement('p');
-                const displayName = (resultsMapping[category] && resultsMapping[category][resultValue])
-                    ? resultsMapping[category][resultValue]
-                    : resultValue.replace(/_/g, ' ');
+        function renderLists() {
+            const container = byId('values-container');
+            container.innerHTML = '';
 
-                name.innerText = displayName;
-                name.className = 'result-text';
+            categories.forEach(category => {
+                const section = document.createElement('div');
+                section.className = 'category-section';
+                section.id = `cat-${category}`;
 
-                wrapper.appendChild(img);
-                wrapper.appendChild(name);
-                container.appendChild(wrapper);
+                const title = document.createElement('h2');
+                title.className = 'category-title';
+                title.innerText = categoryTitles[category] || category;
+                section.appendChild(title);
+
+                const flex = document.createElement('div');
+                flex.className = 'values-flex-container';
+                const list = answers[category];
+
+                (list || []).slice().sort((a, b) => b.agree - a.agree).forEach(item => {
+                    const tile = makeTile(`description.html?id=${item.value}&cat=${category}&edit=1`,
+                        `${nameOf(category, item.value)}: ${HV.signed(item.agree)}`);
+
+                    const img = document.createElement('img');
+                    img.src = `icons/${category}/${item.value}.svg`;
+                    img.className = 'result-icon';
+                    img.alt = '';
+                    img.style.borderRadius = '50%';
+                    img.style.boxShadow = `0 0 0 3px var(--bg-color), 0 0 0 6px ${HV.ringColor(item.agree)}`;
+                    img.onerror = () => { img.style.display = 'none'; };
+
+                    const name = document.createElement('p');
+                    name.className = 'result-text';
+                    setName(name, nameOf(category, item.value));
+
+                    const agree = document.createElement('p');
+                    agree.className = 'result-agree';
+                    agree.textContent = HV.signed(item.agree);
+
+                    tile.appendChild(img);
+                    tile.appendChild(name);
+                    tile.appendChild(agree);
+                    flex.appendChild(tile);
+                });
+
+                const add = makeTile(`quiz.html?cat=${category}`);
+                const circle = document.createElement('div');
+                circle.className = 'result-icon result-none add-icon';
+                const label = document.createElement('p');
+                label.className = 'result-text';
+                label.textContent = 'Add new value';
+                add.appendChild(circle);
+                add.appendChild(label);
+                flex.appendChild(add);
+
+                section.appendChild(flex);
+                container.appendChild(section);
+            });
+        }
+
+        // Best match and the next closest matches (scoring lives in scoring.js)
+        function renderResults() {
+            const panel = byId('results-panel');
+            const labelDiv = byId('label');
+            const closestSection = byId('closest-section');
+            const closestList = byId('closest-list');
+            labelDiv.innerHTML = '';
+            closestList.innerHTML = '';
+            closestSection.style.display = 'none';
+
+            const touched = categories.some(category => answers[category]);
+            panel.style.display = touched ? '' : 'none';
+            byId('clear-button').style.display = touched ? '' : 'none';
+            if (!touched) return;
+
+            const ranked = HV.closestIdeologies(answers, null, 1 + CLOSEST_COUNT);
+            const best = ranked[0];
+            const closestMatches = ranked.slice(1);
+
+            labelDiv.className = 'label-bubble';
+            labelDiv.style.backgroundColor = best ? (labelColors[best.label] || '#7a7a7a') : '#7a7a7a';
+
+            if (best) {
+                const labelLink = document.createElement('a');
+                labelLink.href = `description.html?id=${encodeURIComponent(best.label)}&type=ideology&compare=1`;
+                labelLink.style.cssText = 'color: inherit; text-decoration: none; display: block;';
+                labelLink.title = `Score ${HV.signed(best.score)} (from \u22121 to +1)`;
+                const labelName = document.createElement('span');
+                setName(labelName, best.label);
+                const labelScore = document.createElement('span');
+                labelScore.className = 'label-score';
+                labelScore.textContent = `(${HV.signed(best.score)})`;
+                labelLink.append(labelName, ' ', labelScore);
+                labelDiv.appendChild(labelLink);
+
+            } else {
+                setName(labelDiv, 'No match');
+            }
+
+            if (closestMatches.length > 0) {
+                closestSection.style.display = 'flex';
+                closestMatches.forEach((match, index) => {
+                    const color = (labelColors[match.label] || '#7a7a7a').slice(0, 7);
+
+                    // Same look as the original "Next closest match": an outlined bubble in the ideology's color
+                    const pill = document.createElement('a');
+                    pill.className = 'closest-pill';
+                    pill.href = `description.html?id=${encodeURIComponent(match.label)}&type=ideology&compare=1`;
+                    pill.style.setProperty('--pill-color', color);
+                    pill.title = `Score ${HV.signed(match.score)} (from \u22121 to +1)`;
+
+                    const rank = document.createElement('span');
+                    rank.className = 'cp-rank';
+                    rank.textContent = `${index + 1}.`;
+                    const name = document.createElement('span');
+                    name.className = 'cp-name';
+                    setName(name, match.label);
+                    const score = document.createElement('span');
+                    score.className = 'cp-score';
+                    score.textContent = `(${HV.signed(match.score)})`;
+
+                    pill.append(rank, ' ', name, ' ', score);
+                    closestList.appendChild(pill);
+                });
+            }
+        }
+
+        function render() {
+            renderLists();
+            renderResults();
+            fitNames();
+        }
+
+        byId('clear-button').onclick = () => {
+            if (!confirm('Clear all your values?')) return;
+            answers = {};
+            HV.saveAnswers(answers);
+            render();
+        };
+
+        render();
+
+        // after adding a value, the page opens at that category
+        if (location.hash.indexOf('#cat-') === 0) {
+            const target = document.getElementById(location.hash.slice(1));
+            if (target) target.scrollIntoView();
+        }
+
+        // coming back with the browser's back button can show an old copy of the page
+        window.addEventListener('pageshow', event => {
+            if (event.persisted) {
+                answers = HV.loadAnswers();
+                render();
             }
         });
-
-        const matchedKey = Object.keys(labelMapping)
-            .sort((a, b) => b.split('|').length - a.split('|').length)
-            .find(key => {
-                const requiredParts = key.split('|');
-                return requiredParts.every(part => userResults.includes(part));
-            });
-
-        const finalLabel = matchedKey ? labelMapping[matchedKey] : "No exact match";
-        const labelDiv = document.getElementById('label');
-        labelDiv.className = "label-bubble";
-        labelDiv.style.backgroundColor = labelColors[finalLabel] || "#7a7a7a";
-
-        if (matchedKey) {
-            labelDiv.innerHTML = `<a href="description.html?id=${encodeURIComponent(finalLabel)}&type=ideology" style="color: inherit; text-decoration: none; display: block;">${finalLabel}</a>`;
-        } else {
-            labelDiv.innerText = finalLabel;
-        }
-
-        const secondaryLabelDiv = document.getElementById('secondary-label');
-        const scoredLabels = Object.keys(labelMapping)
-            .map(key => {
-                const requiredParts = key.split('|');
-                let score = 0;
-                let penalty = 0;
-                let identicalCount = 0;
-                let broaderCount = 0;
-
-                requiredParts.forEach(reqVal => {
-                    const category = Object.keys(resultsMapping).find(cat => resultsMapping[cat][reqVal]);
-                    if (!category) return;
-                    const userVal = results[category];
-                    if (!userVal) return;
-                    const userGroup = Object.keys(subCategories[category] || {}).find(group => 
-                         subCategories[category][group].includes(userVal)
-                    );
-                    const reqGroup = Object.keys(subCategories[category] || {}).find(group => 
-                         subCategories[category][group].includes(reqVal)
-                    );
-                    if (userVal === reqVal) {
-                        score += 1.0;
-                        identicalCount++;
-                    } else if (userGroup && userGroup === reqGroup) {
-                        score += 0.5;
-                        broaderCount++;
-                    }
-                    if (userGroup && reqGroup) {
-                        const userIncompat = incompatibleSubCategories[userGroup] || [];
-                        const reqIncompat = incompatibleSubCategories[reqGroup] || [];
-                        if (userIncompat.includes(reqGroup) || reqIncompat.includes(userGroup)) {
-                            penalty = -100;
-                        }
-                    }
-                });
-                return { 
-                    key, 
-                    label: labelMapping[key], 
-                    score: score + penalty,
-                    identicalCount,
-                    broaderCount,
-                    totalRequired: requiredParts.length
-                };
-            })
-            .sort((a, b) => b.score - a.score)
-            .filter(item => item.label !== finalLabel);
-
-        const uniqueScoredLabels = [];
-        const seenLabels = new Set();
-        for (const item of scoredLabels) {
-            if (!seenLabels.has(item.label)) {
-                seenLabels.add(item.label);
-                uniqueScoredLabels.push(item);
-            }
-        }
-
-        if (uniqueScoredLabels.length > 0 && uniqueScoredLabels[0].score > 0) {
-            const nextMatch = uniqueScoredLabels[0];
-            secondaryLabelDiv.className = "label-bubble";
-            secondaryLabelDiv.style.display = "inline-block";
-            secondaryLabelDiv.style.borderColor = labelColors[nextMatch.label] || "#7a7a7a";
-            secondaryLabelDiv.style.color = labelColors[nextMatch.label] || "#7a7a7a";
-
-            secondaryLabelDiv.innerHTML = `<a href="description.html?id=${encodeURIComponent(nextMatch.label)}&type=ideology" style="color: inherit; text-decoration: none; display: block;">Next closest match: ${nextMatch.label} (${nextMatch.identicalCount}/${nextMatch.totalRequired})</a>`;
-        } else {
-            secondaryLabelDiv.style.display = "none";
-        }
     </script>
-    </div>
 </body>
 </html>

@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeoValues - All Values</title>
+    <title>HyperValues - All Values</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/svg" href="icon.svg">
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
     <script src="theme.js"></script>
+    <script src="linebreak.js"></script>
 </head>
 <body>
     <div class="main-container">
         <h1>All Values</h1>
-        <p class="intro-text">Below is a collection of all values included in NeoValues. Click on any icon to view its detailed description and original source.</p>
+        <p class="intro-text">Below is a collection of all values included in HyperValues. Click on any icon to view its detailed description and original source.</p>
         <div id="values-container"></div>
         <div id="buttons" style="margin-top: 40px; padding-bottom: 60px;">
             <button onclick="location.href='index.html'">Back</button>
@@ -23,7 +24,7 @@
     <script>
         const container = document.getElementById('values-container');
 
-        for (const category in resultsMapping) {
+        for (const category of categories) {
             const section = document.createElement('div');
             section.className = 'category-section';
 
@@ -49,7 +50,7 @@
                 img.alt = resultsMapping[category][id];
 
                 const name = document.createElement('p');
-                name.innerText = resultsMapping[category][id];
+                setName(name, resultsMapping[category][id]);
                 name.className = 'result-text'; 
 
                 wrapper.appendChild(img);

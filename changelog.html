@@ -3,14 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeoValues</title>
+    <title>HyperValues</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/svg" href="icon.svg">
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
     <script src="theme.js"></script>
 </head>
 <body>
     <div class="main-container">
         <h1>Changelog</h1>
+
+        <div class="description-box">
+            <h3>3.9 - 08.11.2026</h3>
+            <ul>
+                <li>The closest ideologies are now ranked by an embedding model. A small neural network turns your answers into a point of 32 numbers, each ideology is a point built from its definition, and the ones closest to you rank first. The score is how likely each ideology is given your answers: 0 means no better than chance, +1 means certain. An ideology has no numbers of its own, so a new ideology needs only its definition, no training. It is trained on simulated users generated from the definitions, because there is no real data. On simulated users it finds the right ideology first in 97% of cases when every category is answered (91% for the Naive Bayes model before it), 59% when only about half are (55% before) and 86% when many related values are picked (67% before). With a lot of noise or two ideologies mixed it is only a little better (46% against 43%, 52% against 48%), and with a single value answered it can pick oddly. This is not a fair test, since the model is trained on the same kind of users. If the model fails to load, the plain similarity between your answers and the definitions is used.</li>
+                <li>Every one of the 237 ideologies now lists the values its own definition mentions, from -1 (it opposes the value) to +1 (it matches it); values it never mentions are left out. The old value sets are no longer used to score.</li>
+                <li>Rewrote the description of all 237 ideologies as a plain definition of what each one holds and opposes, in terms its own supporters would accept, without history or labels from outside. Italian Fascism, National-Socialism and Neo-Nazism, which had none, now have one.</li>
+                <li>The ideology page lists the values its definition mentions, by category, each with the ideology's own score. Coming from the results page, the rings still show how each value compares with your answers.</li>
+                <li>Fixed the quiz: choosing a value you had already marked neutral or opposite now sets it to +1 instead of doing nothing; an unknown category in the link goes back to the results page instead of showing a blank page; if the questions cannot be loaded, a message and a Back button are shown.</li>
+                <li>Fixed the page icon, which pointed to a missing file with a wrong type. A placeholder icon is in place until there is a real logo.</li>
+                <li>Known gaps: Fair Tax and Posthumanism are held by no ideology, so choosing only one of them finds no match; 82 ideologies have less certain definitions with few scores.</li>
+            </ul>
+        </div>
+
+        <div class="description-box">
+            <h3>3.8 - 02.11.2026</h3>
+            <ul>
+                <li>Changed again how the closest ideologies are chosen. Each value set of an ideology is now scored by how likely someone holding it would be to give your answers: matching a rare value counts for more, and a different answer lowers the score by a similar amount whatever it is. Ideologies with several value sets are neither helped nor hurt by it, and ties go to the ideology with more matching values. In tests that changed a few answers of known value sets, the original ideology was found more often than before.</li>
+                <li>Scores now run from -1 to +1, where 0 means no evidence either way.</li>
+                <li>Rewrote all the questions and answers. The 128 values are the same, but the quiz is shorter (52 questions instead of 71, about 19 per quiz), every value is reached after the same number of questions in its category, each answer says one thing in a neutral tone, and each category asks only about its own topic.</li>
+                <li>The results page is now the main page of the quiz. After Continue it shows the nine categories, each with an "Add new value" button, and your closest ideologies below them, updated every time you add or remove a value or move a slider. It replaces the 3x3 table of icons and the "Show my results" step. "Clear all" starts over.</li>
+                <li>"Add new value" asks the questions of that category and brings you back to the list once you get a value. "Skip this category" and "None of these fit" are gone: a category you do not touch is ignored. The back button is now a regular answer button at the end of the answers.</li>
+                <li>You can add several values per category. Click a value to see its description and a slider from -1 (opposite) to +1 (match); a new value starts at +1. The more values you add, the less each one says, so adding values you do not hold does not help. A value you do not add counts against it, and a value you mark opposite counts against it even more. How much more is an assumption, since there is no data to measure it.</li>
+                <li>The ideology page shows each value set as a list of the nine categories instead of a 3x3 table, still browsed with the arrows.</li>
+                <li>The categories are now ordered by how much each one narrows down the ideologies, on the results, values and ideology pages: economics, technology, culture, social control, authority, foreign policy, nation, territorial organization, resource management. The values in each category on the results page are ordered by how much they match you.</li>
+                <li>The layout is rebuilt for phones and wide screens: on wide screens the lists use two columns, and buttons no longer keep their hover look after a tap.</li>
+                <li>The closest ideologies are shown as outlined bubbles in the ideology's color, like the original "Next closest match", without the rank circles and the arrow.</li>
+                <li>The results page no longer looks for an exact match. The best-scoring ideology is shown on top, and the next three below it, each with its score instead of the number of matching values.</li>
+                <li>Sub-groups and the clashes between them are removed, since the score no longer uses them.</li>
+                <li>On the ideology page, the ring around each value now fades from dark red (-1, opposite) through gray (0) to dark green (+1, match), using the same score as the ranking. Matching a rarer value gives a stronger green.</li>
+                <li>Long names now wrap like the original: a line breaks between words or at a hyphen when that is enough, and a word is only broken inside when it cannot fit on a line by itself. This applies to the closest ideologies and to value names on the results, values and ideology pages.</li>
+            </ul>
+        </div>
+
+        <div class="description-box">
+            <h3>3.7 - 31.10.2026</h3>
+            <ul>
+                <li>The results page now shows your three closest ideologies instead of one. Opening any ideology (from the results or the ideology list) shows its name, its values laid out by category and its description. Use the arrows to browse its other value sets. When opened from your results, each value is ringed by how it compares with yours: green for the same or a close value, yellow to red for clashes (from mild to extreme) and gray for unrelated.</li>
+                <li>Reworked how the closest ideologies are chosen: a clashing value now lowers the score by an amount that depends on how serious the clash is, instead of removing the ideology completely.</li>
+                <li>Rarer values now count for more, ideologies with several value sets no longer get an unfair advantage, and ties go to the ideology you match more closely.</li>
+                <li>Added 23 new pairs of clashing sub-groups, and some values (for example Neocorporatism) now belong to more than one sub-group.</li>
+            </ul>
+        </div>
+
+        <div class="description-box">
+            <h3>3.6 - 30.10.2026</h3>
+            <ul>
+                <li>The project is now called HyperValues (previously NeoValues).</li>
+                <li>Changed how the "Next closest match" is chosen: it now also considers how many of an ideology's own values you match, so ideologies that only share a few loosely related values with you no longer beat ideologies that fit you better.</li>
+                <li>Removed the Contact, Support and Other tests pages and links.</li>
+                <li>The GitHub icon now links to the HyperValues repository.</li>
+            </ul>
+        </div>
 
         <div class="description-box">
             <h3>3.5 - 19.10.2026</h3>
@@ -32,8 +85,7 @@
                 <li>Added 2 new economic values: Paternalistic Capitalism and Social Solidarity Economy.</li>
                 <li>Added the following ideologies: Tsaingwenism, Kjærsgaardism, Left-Social Democracy, Tridemism, Progressive Helveticism, Austro-Corporatism, Reform Gaullism and Kekkonism.</li>
                 <li>Fixed a calculation bug in results where the next closest match always showed a denominator of 9; it now dynamically calculates against the ideology's actual required values.</li>
-                <li>Added clickable navigation icons for Support and GitHub to the main menu.</li>
-                <li>Added the Support page with verified relief and defense initiatives for Ukraine.</li>
+                <li>Added a clickable navigation icon for GitHub to the main menu.</li>
             </ul>
         </div>
 

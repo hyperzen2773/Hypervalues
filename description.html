@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ideology Description</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/svg" href="icon.svg">
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
     <script src="theme.js"></script>
+    <script src="linebreak.js"></script>
 </head>
 <body>
     <div class="main-container">
         <img id="ideology-icon" src="" alt="" class="desc-icon">
         <h1 id="ideology-title">Loading...</h1>
+        <div id="value-edit" class="value-edit" style="display: none;"></div>
+        <div id="ideology-viewer" class="iv-viewer" style="display: none;"></div>
 
         <div class="description-box">
             <p id="ideology-description"></p>
@@ -20,11 +23,15 @@
         <div class="button-container">
             <button id="icon-source-btn" style="display: none;" onclick="openIconSource()">Original Icon Source</button>
             <div id="original-work-sign" class="original-work-sign" style="display: none;">Source not provided</div>
-            <button onclick="window.history.back()">Back</button>
+            <button id="remove-value-btn" style="display: none;">Remove value</button>
+            <button id="back-btn" onclick="window.history.back()">Back</button>
         </div>
     </div>
 
     <script src="data.js"></script>
+    <script src="embedding_weights.js"></script>
+    <script src="scoring.js"></script>
+    <script src="slider.js"></script>
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const itemId = urlParams.get('id');
@@ -49,6 +56,7 @@
             sourceBtn.style.display = 'none';
             originalSign.style.display = 'none';
             descEl.innerText = descriptions[itemId] || "Description coming soon!";
+            buildViewer(itemId);
         } else {
             const prettyName = (resultsMapping[category] && resultsMapping[category][itemId])
                                 ? resultsMapping[category][itemId]
@@ -65,6 +73,122 @@
             } else {
                 sourceBtn.style.display = 'none';
                 originalSign.style.display = 'block';
+            }
+        }
+
+
+        // ---------------------------------------------------------------------------
+        // Ideology page: the values its definition mentions, by category, each with the ideology's stance
+        // from -1 (it opposes the value) to +1 (it matches it), ringed by how they compare with your values
+        // ---------------------------------------------------------------------------
+        function buildViewer(label) {
+            const viewer = document.getElementById('ideology-viewer');
+            const answers = HV.loadAnswers();
+            // rings only when opened from the results page (the link carries compare=1)
+            const hasResults = urlParams.get('compare') === '1' && categories.some(cat => answers[cat]);
+
+            const stances = HV.stancesByCategory(label);
+            if (!Object.keys(stances).length) return;
+
+            const nameOf = (cat, value) => (resultsMapping[cat] && resultsMapping[cat][value])
+                ? resultsMapping[cat][value]
+                : value.replace(/_/g, ' ');
+
+            const list = document.createElement('div');
+            list.id = 'values-container';
+            list.className = 'category-list';
+            viewer.appendChild(list);
+            viewer.style.display = 'flex';
+
+            function ringText(answered, value) {
+                if (!answered) return 'No value of yours in this category';
+                const chosen = answered.find(item => item.value === value);
+                return chosen ? `You gave this ${HV.signed(chosen.agree)}` : 'Not among your values';
+            }
+
+            categories.forEach(cat => {
+                const section = document.createElement('div');
+                section.className = 'category-section';
+                const title = document.createElement('h2');
+                title.className = 'category-title';
+                title.textContent = categoryTitles[cat] || cat;
+                const flex = document.createElement('div');
+                flex.className = 'values-flex-container';
+
+                const items = stances[cat] || [];
+                if (!items.length) {                            // the definition says nothing in this category
+                    const tile = document.createElement('div');
+                    tile.className = 'result-item';
+                    const circle = document.createElement('div');
+                    circle.className = 'result-icon result-none';
+                    tile.appendChild(circle);
+                    flex.appendChild(tile);
+                }
+                items.forEach(item => {
+                    const value = item.value;
+                    const tile = document.createElement('a');
+                    tile.className = 'result-item';
+                    tile.href = `description.html?id=${value}&cat=${cat}`;
+                    tile.style.textDecoration = 'none';
+                    tile.style.color = 'inherit';
+
+                    const img = document.createElement('img');
+                    img.src = `icons/${cat}/${value}.svg`;
+                    img.className = 'result-icon';
+                    img.alt = '';
+                    img.style.borderRadius = '50%';
+                    img.onerror = () => { img.style.display = 'none'; };
+
+                    const name = document.createElement('p');
+                    name.className = 'result-text';
+                    setName(name, nameOf(cat, value));
+
+                    tile.appendChild(img);
+                    tile.appendChild(name);
+
+                    const stance = document.createElement('p');
+                    stance.className = 'result-agree';
+                    stance.textContent = HV.signed(item.stance);
+                    tile.appendChild(stance);
+
+                    let hint = `${nameOf(cat, value)}: this ideology ${item.stance > 0 ? 'matches' : 'opposes'} it (${HV.signed(item.stance)})`;
+                    if (hasResults) {
+                        const score = HV.valueScore(value, answers, item.stance);
+                        img.style.boxShadow = `0 0 0 3px var(--bg-color), 0 0 0 6px ${HV.ringColor(score)}`;
+                        hint += `. ${ringText(answers[cat], value)}; fit ${HV.signed(score)}`;
+                    }
+                    tile.title = hint;
+                    flex.appendChild(tile);
+                });
+                section.appendChild(title);
+                section.appendChild(flex);
+                list.appendChild(section);
+            });
+            fitNames(list);
+        }
+
+        // opened from the list of your values: a slider from -1 to +1 and a button to remove the value
+        if (itemId && type !== 'ideology' && urlParams.get('edit') === '1') {
+            const answers = HV.loadAnswers();
+            const list = answers[category] || [];
+            const item = list.find(entry => entry.value === itemId);
+            if (item) {
+                const holder = document.getElementById('value-edit');
+                holder.style.display = 'flex';
+                holder.appendChild(makeSlider(item.agree, value => {
+                    item.agree = value;
+                    HV.saveAnswers(answers);
+                }));
+
+                const remove = document.getElementById('remove-value-btn');
+                remove.style.display = '';
+                remove.onclick = () => {
+                    list.splice(list.indexOf(item), 1);
+                    if (!list.length) delete answers[category];
+                    HV.saveAnswers(answers);
+                    window.location.href = `results.html#cat-${category}`;
+                };
+                document.getElementById('back-btn').innerText = 'Done';
             }
         }
 

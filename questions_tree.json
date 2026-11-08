@@ -2,1090 +2,1399 @@
   "economics": [
     {
       "id": "e1",
-      "text": "What should be the foundation of the economy?",
+      "text": "Who should mainly own and run businesses and land?",
       "options": [
-        { "text": "A market or mixed economy: private businesses operating either freely or alongside government regulation, public services, and welfare", "next": "e_market_1" },
-        { "text": "A socialist economy: replacing private capitalism with state-owned industry or worker-run collectives", "next": "e_social_1" },
-        { "text": "Non-capitalist, non-socialist alternatives: state-chartered corporatist guilds, small-craft distributism, or feudal land hierarchy", "next": "e_alt_1" }
-      ]
-    },
-    {
-      "id": "e_market_1",
-      "text": "What relationship should the state have with the private market?",
-      "options": [
-        { "text": "Free-market autonomy with minimal or no government interference", "next": "e_market_free" },
-        { "text": "A mixed economy balancing private enterprise with public oversight and investment", "next": "e_market_mixed" }
-      ]
-    },
-    {
-      "id": "e_market_free",
-      "text": "What is the ultimate role of an autonomous, unregulated market?",
-      "options": [
-        { "text": "To operate within a minimal legal framework for commercial contracts and property defense", "next": "laissez_faire" },
-        { "text": "To serve as a counter-economic tool to bypass, starve, and eventually replace the state", "next": "countereconomics" }
-      ]
-    },
-    {
-      "id": "e_market_mixed",
-      "text": "What should be the primary priority of state economic policy?",
-      "options": [
-        { "text": "Social safety nets, healthcare, and income redistribution", "next": "e_market_welfare" },
-        { "text": "Promoting employment, economic stability, and public-private innovation", "next": "e_market_macro" },
-        { "text": "Structured national coordination between government, industry, and labor", "next": "e_market_coordination" }
-      ]
-    },
-    {
-      "id": "e_market_welfare",
-      "text": "How broad should the welfare system and market regulations be?",
-      "options": [
-        { "text": "A strong, universal welfare system that guarantees security for all citizens and holds businesses accountable to society", "next": "e_social_universal" },
-        { "text": "A lighter safety net focused on basic poverty relief while keeping taxes low and markets competitive", "next": "e_social_targeted" }
-      ]
-    },
-    {
-      "id": "e_social_universal",
-      "text": "How should this universal welfare and regulated market work in practice?",
-      "options": [
-        { 
-          "text": "Combine a competitive market with strong public healthcare, pensions, and strict laws against monopolies.", 
-          "next": "social_market" 
+        {
+          "text": "Private owners and companies, competing in markets",
+          "next": "e_market"
         },
-        { 
-          "text": "Give workers seats on company boards, empower unions, and push banks to invest in long-term stability over quick profits.", 
-          "next": "rhine_capitalism" 
+        {
+          "text": "The public: state agencies, workers, or communities",
+          "next": "e_public"
         },
-        { 
-          "text": "Maintain private business while imposing paternal duties on employers and the state to safeguard worker welfare, family security, and class harmony.", 
-          "next": "paternalistic_capitalism" 
-        },
-        { 
-          "text": "Anchor the market in a large network of mutual-benefit funds, credit unions, community enterprises, and worker-run cooperatives.", 
-          "next": "social_solidarity_economy" 
+        {
+          "text": "Another arrangement: widely shared family property, trade bodies, or a traditional order",
+          "next": "e_other"
         }
       ]
     },
     {
-      "id": "e_social_targeted",
-      "text": "How should basic poverty relief work alongside a free market?",
+      "id": "e_market",
+      "text": "What should be the state's main job in the economy?",
       "options": [
-        { "text": "Focus the state on enforcing fair competition, breaking up cartels, and keeping inflation low, with modest social aid", "next": "ordnungspolitik" },
-        { "text": "Provide a minimal, means-tested safety net strictly for the poorest citizens while leaving businesses deregulated", "next": "residualism" },
-        { "text": "Replace complex welfare programs and minimum wage laws with an unconditional Basic Income (UBI) cash payment for all", "next": "basic_income_capitalism" }
+        {
+          "text": "Enforce property rights, contracts and fair competition, and little else",
+          "next": "e_rules"
+        },
+        {
+          "text": "Guarantee a basic minimum income, leaving markets free",
+          "next": "e_floor"
+        },
+        {
+          "text": "Provide broad social security, with shared responsibility between employers and workers",
+          "next": "e_security"
+        },
+        {
+          "text": "Steer the economy for stability, growth and national coordination",
+          "next": "e_steer"
+        }
       ]
     },
     {
-      "id": "e_market_macro",
-      "text": "How should the state promote economic stability and growth?",
+      "id": "e_rules",
+      "text": "How far should the state go in shaping markets?",
       "options": [
-        { "text": "Counter-cyclical public spending, infrastructure investment, and stimulus to maintain employment", "next": "keynesianism" },
-        { "text": "Public-private partnerships, workforce training, and market-friendly flexibility", "next": "third_way" }
+        {
+          "text": "Protect property and contracts only, with no regulation, subsidies or tariffs",
+          "next": "laissez_faire"
+        },
+        {
+          "text": "Keep competition open and money stable, with only welfare that leaves prices free",
+          "next": "ordnungspolitik"
+        },
+        {
+          "text": "Trade outside state control, through informal or untaxed markets",
+          "next": "countereconomics"
+        }
       ]
     },
     {
-      "id": "e_market_coordination",
-      "text": "How should the state coordinate national industry and labor?",
+      "id": "e_floor",
+      "text": "What form should the minimum take?",
       "options": [
-        { "text": "Strategic industrial planning, capital allocation, and priority sector development", "next": "dirigisme" },
-        { "text": "Institutional wage and price pacts negotiated between state, business, and labor federations", "next": "neo_corporatism" }
+        {
+          "text": "Relief only for the poorest, tested by means, with low taxes and flexible markets",
+          "next": "residualism"
+        },
+        {
+          "text": "A cash payment to everyone, replacing minimum wage rules and welfare offices",
+          "next": "basic_income_capitalism"
+        }
       ]
     },
     {
-      "id": "e_social_1",
-      "text": "Who should hold sovereign control over socialized productive property?",
+      "id": "e_security",
+      "text": "How should broad social security work?",
       "options": [
-        { "text": "The state, acting as the centralized representative of society", "next": "e_social_state" },
-        { "text": "Workers and local communities organizing from the ground up", "next": "e_social_worker" }
+        {
+          "text": "Competitive markets with strong anti-monopoly rules and universal social insurance",
+          "next": "social_market"
+        },
+        {
+          "text": "Long-term bank financing, workers on company boards, and partnership between labor and capital",
+          "next": "rhine_capitalism"
+        },
+        {
+          "text": "Duties on employers and the state to protect workers and families and keep class harmony",
+          "next": "paternalistic_capitalism"
+        },
+        {
+          "text": "A large sector of cooperatives, mutual-aid funds and credit unions beside private firms",
+          "next": "social_solidarity_economy"
+        }
       ]
     },
     {
-      "id": "e_social_state",
-      "text": "What is the primary function of state-owned enterprises?",
+      "id": "e_steer",
+      "text": "How should the state steer the economy?",
       "options": [
-        { "text": "To operate commercially in the global market to maximize state revenue and geopolitical power", "next": "state_capitalism" },
-        { "text": "To produce directly for human use under public planning, eliminating the profit motive entirely", "next": "state_socialism" }
+        {
+          "text": "Raise public spending to boost demand in downturns",
+          "next": "keynesianism"
+        },
+        {
+          "text": "Pair market-friendly economics with progressive social policy and public-private partnerships",
+          "next": "third_way"
+        },
+        {
+          "text": "Direct investment and key industries through state planning, beyond regulating",
+          "next": "dirigisme"
+        },
+        {
+          "text": "Negotiate national wage and price pacts between government, business and unions",
+          "next": "neo_corporatism"
+        }
       ]
     },
     {
-      "id": "e_social_worker",
-      "text": "How should worker-owned production be coordinated?",
+      "id": "e_public",
+      "text": "Who should control production?",
       "options": [
-        { "text": "Worker-owned cooperatives competing and trading inside an open market economy", "next": "market_socialism" },
-        { "text": "Voluntary, self-contained intentional moral communities established outside mainstream systems", "next": "utopian_socialism" },
-        { "text": "Decentralized labor federations or the immediate abolition of market exchange", "next": "e_social_nonmarket" }
+        {
+          "text": "The state, acting for society as a whole",
+          "next": "e_state"
+        },
+        {
+          "text": "Workers, through cooperatives, unions or guilds",
+          "next": "e_workers"
+        },
+        {
+          "text": "Voluntary, stateless groups of producers and communities",
+          "next": "e_stateless"
+        }
       ]
     },
     {
-      "id": "e_social_nonmarket",
-      "text": "What mechanism should replace the market economy?",
+      "id": "e_state",
+      "text": "What should state-owned enterprises do?",
       "options": [
-        { "text": "The immediate abolition of money, wages, accounting, and the value-form", "next": "communization" },
-        { "text": "Direct 'labor for labor' exchange and mutual credit between producers", "next": "mutualism" },
-        { "text": "Democratic trade union federations running each industrial sector", "next": "syndicalism" },
-        { "text": "Semi-autonomous craft guilds balancing occupational standards and public need", "next": "guild_socialism" },
-        { "text": "Decentralized local communes prioritizing individual liberty and voluntary cooperation", "next": "free_socialism" }
+        {
+          "text": "Run commercially in the market to earn revenue for the state",
+          "next": "state_capitalism"
+        },
+        {
+          "text": "Produce for human need under central planning, ending private profit",
+          "next": "state_socialism"
+        }
       ]
     },
     {
-      "id": "e_alt_1",
-      "text": "Which alternative framework should govern property and industry?",
+      "id": "e_workers",
+      "text": "How should worker-controlled industry be coordinated?",
       "options": [
-        { "text": "Wide-spread distribution of small-scale private property to families and individuals", "next": "e_distrib_split" },
-        { "text": "Integrating society into state-chartered industrial and occupational corporate bodies", "next": "e_corporatist_split" },
-        { "text": "A traditional agrarian hierarchy governed by customary land obligations and personal loyalties", "next": "feudalism" }
+        {
+          "text": "Worker-owned cooperatives that compete and trade in markets",
+          "next": "market_socialism"
+        },
+        {
+          "text": "Union federations running each industry, won through strikes and direct action",
+          "next": "syndicalism"
+        },
+        {
+          "text": "Craft guilds managing their trades in partnership with a public authority",
+          "next": "guild_socialism"
+        }
       ]
     },
     {
-      "id": "e_distrib_split",
-      "text": "How should the widespread distribution of property be achieved and maintained?",
+      "id": "e_stateless",
+      "text": "What should replace both the market and the state?",
       "options": [
-        { "text": "Through left-wing or cooperative approaches (peasant agriculture, anti-monopoly laws, mutual credit)", "next": "e_distrib_left" },
-        { "text": "Through market-oriented or decentralist approaches (subsidiarity, contract freedom, small enterprise)", "next": "e_distrib_right" }
+        {
+          "text": "Producers exchange equal labor value and lend to each other through mutual credit",
+          "next": "mutualism"
+        },
+        {
+          "text": "Worker cooperatives with decentralized planning and direct democracy",
+          "next": "free_socialism"
+        },
+        {
+          "text": "Self-sustaining model communities built by example and voluntary cooperation",
+          "next": "utopian_socialism"
+        },
+        {
+          "text": "Abolish money, wages and classes at once, through revolution",
+          "next": "communization"
+        }
       ]
     },
     {
-      "id": "e_distrib_left",
-      "text": "Which institution should anchor this cooperative property distribution?",
+      "id": "e_other",
+      "text": "Which arrangement fits best?",
       "options": [
-        { "text": "Centering the economy on small-scale peasant farming and collective land access", "next": "agrarian_socialism" },
-        { "text": "Using aggressive state intervention and progressive tax codes to break up concentrated capital", "next": "social_distributism" },
-        { "text": "Relying on mutual-aid banks, local credit unions, and voluntary cooperatives", "next": "mutual_distributism" }
+        {
+          "text": "Property spread as widely as possible among families and communities",
+          "next": "e_spread"
+        },
+        {
+          "text": "Industry organized into trade or occupational bodies working with the state",
+          "next": "e_bodies"
+        },
+        {
+          "text": "A hierarchy run from the top, by lords or by expert officials",
+          "next": "e_order"
+        }
       ]
     },
     {
-      "id": "e_distrib_right",
-      "text": "How should small-scale, market-oriented property ownership be sustained?",
+      "id": "e_spread",
+      "text": "How should wide ownership be achieved?",
       "options": [
-        { "text": "Promoting family-owned enterprises and localism under the principle of subsidiarity", "next": "distributism" },
-        { "text": "Relying on completely unhindered free markets and voluntary contracts without state interference", "next": "free_market_distributism" }
+        {
+          "text": "Free markets without state privileges, so monopolies fade and small firms spread",
+          "next": "free_market_distributism"
+        },
+        {
+          "text": "Family-owned farms and firms, supported by strong local self-reliance",
+          "next": "distributism"
+        },
+        {
+          "text": "Wide ownership backed by mutual aid and cooperative credit",
+          "next": "mutual_distributism"
+        },
+        {
+          "text": "State action, such as taxes and rules, to keep property widely distributed",
+          "next": "social_distributism"
+        },
+        {
+          "text": "Land redistributed to peasants and farmed collectively in rural communes",
+          "next": "agrarian_socialism"
+        }
       ]
     },
     {
-      "id": "e_corporatist_split",
-      "text": "What is the primary objective of organizing industry into state-coordinated bodies?",
+      "id": "e_bodies",
+      "text": "What should the trade bodies be for?",
       "options": [
-        { "text": "Subordinating all class and business interests to the national state", "next": "corporatism" },
-        { "text": "Securing statutory power and representation for worker syndicates within state institutions", "next": "social_corporatism" },
-        { "text": "Creating company-level unions that cooperate with management for profit-sharing and labor peace", "next": "yellow_socialism" },
-        { "text": "Direct administrative management of national wealth to maximize the public treasury", "next": "cameralism" }
+        {
+          "text": "Grouping society by function, such as farming or labor, under the national state",
+          "next": "corporatism"
+        },
+        {
+          "text": "State-organized sectors where workers' syndicates hold the leading voice",
+          "next": "social_corporatism"
+        },
+        {
+          "text": "Company-level unions that share profits with management, under a strong state",
+          "next": "yellow_socialism"
+        }
       ]
     },
-    { "id": "social_market" },
-    { "id": "rhine_capitalism" },
-    { "id": "paternalistic_capitalism" },
-    { "id": "social_solidarity_economy" },
-    { "id": "ordnungspolitik" },
-    { "id": "residualism" },
-    { "id": "basic_income_capitalism" },
-    { "id": "laissez_faire" },
-    { "id": "countereconomics" },
-    { "id": "state_capitalism" },
-    { "id": "state_socialism" },
-    { "id": "dirigisme" },
-    { "id": "keynesianism" },
-    { "id": "third_way" },
-    { "id": "neo_corporatism" },
-    { "id": "corporatism" },
-    { "id": "social_corporatism" },
-    { "id": "yellow_socialism" },
-    { "id": "mutualism" },
-    { "id": "guild_socialism" },
-    { "id": "syndicalism" },
-    { "id": "market_socialism" },
-    { "id": "free_socialism" },
-    { "id": "communization" },
-    { "id": "utopian_socialism" },
-    { "id": "mutual_distributism" },
-    { "id": "social_distributism" },
-    { "id": "agrarian_socialism" },
-    { "id": "distributism" },
-    { "id": "feudalism" },
-    { "id": "cameralism" },
-    { "id": "free_market_distributism" }
+    {
+      "id": "e_order",
+      "text": "Who should manage the economy from the top?",
+      "options": [
+        {
+          "text": "Landowning lords, bound to their people by loyalty and customary duty",
+          "next": "feudalism"
+        },
+        {
+          "text": "Expert officials managing the economy like a household to enrich the treasury",
+          "next": "cameralism"
+        }
+      ]
+    },
+    {
+      "id": "laissez_faire"
+    },
+    {
+      "id": "ordnungspolitik"
+    },
+    {
+      "id": "countereconomics"
+    },
+    {
+      "id": "residualism"
+    },
+    {
+      "id": "basic_income_capitalism"
+    },
+    {
+      "id": "social_market"
+    },
+    {
+      "id": "rhine_capitalism"
+    },
+    {
+      "id": "paternalistic_capitalism"
+    },
+    {
+      "id": "social_solidarity_economy"
+    },
+    {
+      "id": "keynesianism"
+    },
+    {
+      "id": "third_way"
+    },
+    {
+      "id": "dirigisme"
+    },
+    {
+      "id": "neo_corporatism"
+    },
+    {
+      "id": "state_capitalism"
+    },
+    {
+      "id": "state_socialism"
+    },
+    {
+      "id": "market_socialism"
+    },
+    {
+      "id": "syndicalism"
+    },
+    {
+      "id": "guild_socialism"
+    },
+    {
+      "id": "mutualism"
+    },
+    {
+      "id": "free_socialism"
+    },
+    {
+      "id": "utopian_socialism"
+    },
+    {
+      "id": "communization"
+    },
+    {
+      "id": "free_market_distributism"
+    },
+    {
+      "id": "distributism"
+    },
+    {
+      "id": "mutual_distributism"
+    },
+    {
+      "id": "social_distributism"
+    },
+    {
+      "id": "agrarian_socialism"
+    },
+    {
+      "id": "corporatism"
+    },
+    {
+      "id": "social_corporatism"
+    },
+    {
+      "id": "yellow_socialism"
+    },
+    {
+      "id": "feudalism"
+    },
+    {
+      "id": "cameralism"
+    }
   ],
   "resource_management": [
-    { 
-      "id": "r1", 
-      "text": "How should society manage the funding of public needs and the distribution of common wealth?", 
-      "options": [ 
-        { 
-          "text": "Through statutory domestic taxation on economic production (such as personal income, corporate profits, or capital).", 
-          "next": "r_production" 
-        }, 
-        { 
-          "text": "By shifting the tax burden primarily onto unimproved land and economic resource rents.", 
-          "next": "r_land" 
-        }, 
-        { 
-          "text": "By abolishing domestic income taxes in favor of consumption or external trade levies.", 
-          "next": "r_non_income" 
-        }, 
-        { 
-          "text": "By abolishing taxation and wage labor entirely; socialized ownership where wealth is produced and allocated directly for human need.", 
-          "next": "collective_distribution" 
-        }, 
-        { 
-          "text": "Strictly through voluntary contributions (donations, lotteries, or user fees); all compulsory state levies are inherently illegitimate.", 
-          "next": "Voluntaryism" 
-        } 
-      ] 
+    {
+      "id": "r1",
+      "text": "How should public services be funded?",
+      "options": [
+        {
+          "text": "Taxes on people's income or wealth",
+          "next": "r_income"
+        },
+        {
+          "text": "Taxes on something other than income, such as land, spending or imports",
+          "next": "r_other"
+        },
+        {
+          "text": "Without compulsory taxes",
+          "next": "r_none"
+        }
+      ]
     },
-    { 
-      "id": "r_production", 
-      "text": "How should the burden of productivity and income taxation be structured across society?", 
-      "options": [ 
-        { 
-          "text": "A flat, uniform percentage applied equally across all participants to preserve market neutrality.", 
-          "next": "flat_taxation" 
-        }, 
-        { 
-          "text": "A graduated progressive scale where contribution rates increase as income or wealth capacity rises.", 
-          "next": "Progressive_Taxation" 
-        }, 
-        { 
-          "text": "Confiscatory maximum rates (approaching 100%) on extreme incomes, private fortunes, or inheritances to prevent economic dynasties.", 
-          "next": "Confiscatory_Taxation" 
-        } 
-      ] 
+    {
+      "id": "r_income",
+      "text": "How should the tax rate change as income rises?",
+      "options": [
+        {
+          "text": "It stays the same for everyone",
+          "next": "flat_taxation"
+        },
+        {
+          "text": "It rises steadily as income rises",
+          "next": "Progressive_Taxation"
+        },
+        {
+          "text": "It becomes extremely high, near total, above a set level",
+          "next": "Confiscatory_Taxation"
+        }
+      ]
     },
-    { 
-      "id": "r_land", 
-      "text": "How absolute should the reliance on Land Value Taxation (LVT) be?", 
-      "options": [ 
-        { 
-          "text": "Unimproved land value is the sole source of public revenue, abolishing all taxes on income, labor, commerce, and buildings.", 
-          "next": "lvt" 
-        }, 
-        { 
-          "text": "Land Value Tax is the foundational revenue base to stop speculation, supplemented by standard taxes to fund public services and welfare.", 
-          "next": "mixed_lvt" 
-        } 
-      ] 
+    {
+      "id": "r_other",
+      "text": "What should the state tax instead of income?",
+      "options": [
+        {
+          "text": "Only the value of land, with no other taxes",
+          "next": "lvt"
+        },
+        {
+          "text": "Land value and resource rents first, plus ordinary taxes for the rest",
+          "next": "mixed_lvt"
+        },
+        {
+          "text": "One uniform sales tax on final purchases of new goods",
+          "next": "fair_tax"
+        },
+        {
+          "text": "Import duties and customs, with no domestic taxes on citizens",
+          "next": "tariff_funding"
+        }
+      ]
     },
-    { 
-      "id": "r_non_income", 
-      "text": "What non-income mechanism should fund the state without taxing labor and investment?", 
-      "options": [ 
-        { 
-          "text": "A single, uniform national consumption tax on all final goods, eliminating income, corporate, and payroll taxes.", 
-          "next": "fair_tax" 
-        }, 
-        { 
-          "text": "Protective import tariffs, customs duties, and foreign trade levies, eliminating direct domestic taxation on citizens.", 
-          "next": "tariff_funding" 
-        } 
-      ] 
+    {
+      "id": "r_none",
+      "text": "How should public needs be met without compulsory taxes?",
+      "options": [
+        {
+          "text": "Voluntary donations, lotteries and user fees",
+          "next": "Voluntaryism"
+        },
+        {
+          "text": "Goods allocated by community need or contribution, with shared access instead of private ownership",
+          "next": "collective_distribution"
+        }
+      ]
     },
-    { "id": "Voluntaryism" },
-    { "id": "lvt" },
-    { "id": "mixed_lvt" },
-    { "id": "tariff_funding" },
-    { "id": "fair_tax" },
-    { "id": "flat_taxation" },
-    { "id": "Progressive_Taxation" },
-    { "id": "Confiscatory_Taxation" },
-    { "id": "collective_distribution" }
+    {
+      "id": "flat_taxation"
+    },
+    {
+      "id": "Progressive_Taxation"
+    },
+    {
+      "id": "Confiscatory_Taxation"
+    },
+    {
+      "id": "lvt"
+    },
+    {
+      "id": "mixed_lvt"
+    },
+    {
+      "id": "fair_tax"
+    },
+    {
+      "id": "tariff_funding"
+    },
+    {
+      "id": "Voluntaryism"
+    },
+    {
+      "id": "collective_distribution"
+    }
   ],
   "culture": [
     {
       "id": "c1",
-      "text": "What fundamental attitude should society take toward cultural heritage, modern values, and social change?",
+      "text": "What should be society's basic attitude to tradition and change?",
       "options": [
         {
-          "text": "Embrace social progress: reform outdated cultural norms, expand individual liberty, and advance equality through reason.",
-          "next": "c_prog_1"
+          "text": "Reform inherited norms to widen freedom and equality",
+          "next": "c_reform"
         },
         {
-          "text": "Preserve institutional continuity: safeguard proven historical customs, constitutional order, and prudent stability.",
-          "next": "c_con_1"
+          "text": "Change cautiously, keeping what has worked",
+          "next": "c_balance"
         },
         {
-          "text": "Resist modern decay: secular liberal modernity is spiritually hollow or degenerate; society must return to sacred or traditional foundations.",
-          "next": "c_trad_1"
+          "text": "Hold to inherited custom, community and sacred order",
+          "next": "c_rooted"
+        },
+        {
+          "text": "Overturn today's cultural order, to restore the past or build something new",
+          "next": "c_break"
         }
       ]
     },
     {
-      "id": "c_prog_1",
-      "text": "What is the primary objective of cultural progress and social reform?",
+      "id": "c_reform",
+      "text": "What should cultural reform focus on?",
       "options": [
         {
-          "text": "Protecting equal civic rights, freedom of conscience, and strict legal neutrality for every individual.",
+          "text": "Equal rights and legal neutrality, protecting each person's freedom of conscience",
           "next": "civil_liberalism"
         },
         {
-          "text": "Maximizing personal lifestyle freedom, enabling individuals to live and express themselves free from traditional taboos.",
+          "text": "Human life improving through science, technology and better social organization",
           "next": "progressivism"
         },
         {
-          "text": "Actively dismantling systemic prejudice, historical privilege, and cultural hierarchies to achieve social equity.",
+          "text": "Active social action against poverty, inequality and discrimination",
           "next": "social_progressivism"
         },
         {
-          "text": "Radical deconstruction: rejecting all grand narratives of 'progress' or 'truth'—cultural norms are arbitrary power constructs to be dismantled.",
+          "text": "Questioning grand narratives and claims of objective truth, since norms reflect language and power",
           "next": "postmodernism"
         }
       ]
     },
     {
-      "id": "c_con_1",
-      "text": "How should conservative governance balance cultural continuity with social change and individual liberty?",
+      "id": "c_balance",
+      "text": "How should heritage and change be balanced?",
       "options": [
         {
-          "text": "Defend established national culture, civic customs, and institutional stability as the bedrock of society.",
+          "text": "Preserve established institutions and practices, and be wary of rapid change",
           "next": "conservatism"
         },
         {
-          "text": "Prudently adapt to necessary social and cultural evolutions while anchoring society in established historical institutions.",
+          "text": "Keep conservative social principles while using reform to fix social problems",
           "next": "progressive_conservatism"
         },
         {
-          "text": "Synthesize cultural continuity and moral order with personal autonomy and individual liberties.",
-          "next": "c_con_lib_split"
-        }
-      ]
-    },
-    {
-      "id": "c_con_lib_split",
-      "text": "Which principle anchors this synthesis of liberty and conservative values?",
-      "options": [
-        {
-          "text": "Moral foundations: family, faith, and institutional continuity are primary, with personal liberties exercised within an orderly social fabric.",
+          "text": "Commit to traditional institutions, while accepting liberal views on individual liberty",
           "next": "liberal_conservatism"
         },
         {
-          "text": "Individual liberty: personal autonomy, civil liberties, and free expression are society's highest heritage, keeping state moralism minimal.",
+          "text": "Put individual rights and freedom first, with conservative social and cultural stances",
           "next": "conservative_liberalism"
         }
       ]
     },
     {
-      "id": "c_trad_1",
-      "text": "On what foundation should society resist modern secular degeneration and preserve rooted order?",
+      "id": "c_rooted",
+      "text": "What should anchor rooted tradition?",
       "options": [
         {
-          "text": "Rooted ancestral customs, local community obligations, and regional heritage.",
-          "next": "c_trad_organic"
-        },
-        {
-          "text": "Sacred scripture, divine law, and transcendent metaphysical truths.",
-          "next": "c_trad_spiritual"
-        },
-        {
-          "text": "A radical counter-revolution: overturning modern democratic decay through pre-modern restoration or modern techno-traditional syntheses.",
-          "next": "c_trad_counter"
-        }
-      ]
-    },
-    {
-      "id": "c_trad_organic",
-      "text": "What should anchor this rooted, traditional way of life?",
-      "options": [
-        {
-          "text": "An organic moral order rooted in natural law, local piety, family continuity, and rooted communal bonds.",
+          "text": "Inherited customs, local piety, natural law and communal obligations",
           "next": "traditionalist_conservatism"
         },
         {
-          "text": "Defending historic national identity, regional distinctiveness, and traditional morality against globalist homogenization.",
+          "text": "National identity, regional character and traditional morality",
           "next": "paleoconservatism"
-        }
-      ]
-    },
-    {
-      "id": "c_trad_spiritual",
-      "text": "What sacred foundation should guide culture and moral life?",
-      "options": [
+        },
         {
-          "text": "Living strictly by established religious faith, sacred scriptures, and traditional moral teachings.",
+          "text": "Revealed scripture, confessional orthodoxy and church authority",
           "next": "religious_traditionalism"
         },
         {
-          "text": "Reviving a timeless spiritual wisdom and sacred metaphysical order shared across ancient civilizations.",
+          "text": "One primordial wisdom and sacred order shared by ancient civilizations",
           "next": "perennial_traditionalism"
         }
       ]
     },
     {
-      "id": "c_trad_counter",
-      "text": "How should culture challenge liberal modernity and reshape society's worldview?",
+      "id": "c_break",
+      "text": "What should replace today's cultural order?",
       "options": [
         {
-          "text": "Turn the clock back, reject Enlightenment ideas and return to pre-modern cultural norms, virtues, and social roles.",
+          "text": "A return to an earlier social order and its values",
           "next": "reactionaryism"
         },
         {
-          "text": "Reject egalitarian illusions, recognize natural human hierarchy and dismantle modern progressive cultural orthodoxies.",
+          "text": "Older hierarchies in place of Enlightenment ideals, keeping modern technology",
           "next": "neoreactionaryism"
         },
         {
-          "text": "Fuse romantic folklore, ancestral spirit, and heroic national culture with high technology.",
+          "text": "Modern industry and science used to strengthen traditional or romantic heritage",
           "next": "reactionary_modernism"
         },
         {
-          "text": "Forge a dynamic alternative: build a revolutionary, avant-garde pathway to modernity that breaks completely with liberal-bourgeois culture.",
+          "text": "A new path to modernity outside the existing mainstream",
           "next": "alternative_modernism"
         }
       ]
     },
-    { "id": "postmodernism" },
-    { "id": "civil_liberalism" },
-    { "id": "progressivism" },
-    { "id": "social_progressivism" },
-    { "id": "conservative_liberalism" },
-    { "id": "liberal_conservatism" },
-    { "id": "progressive_conservatism" },
-    { "id": "conservatism" },
-    { "id": "traditionalist_conservatism" },
-    { "id": "reactionaryism" },
-    { "id": "paleoconservatism" },
-    { "id": "neoreactionaryism" },
-    { "id": "reactionary_modernism" },
-    { "id": "alternative_modernism" },
-    { "id": "religious_traditionalism" },
-    { "id": "perennial_traditionalism" }
-  ],
-  "authority": [
-    { 
-      "id": "a1", 
-      "text": "What is the legitimate scope of political authority over the individual?", 
-      "options": [ 
-        { "text": "The state is a necessary, sovereign institution required to maintain order, administer law, and govern society.", "next": "a_gov_model" },
-        { "text": "The state's authority must be strictly confined to a minimal night-watchman role (protecting life, property, and contracts).", "next": "minarchism" },
-        { "text": "The state has no legitimate authority; society must be entirely stateless and voluntary.", "next": "a_stateless" }
-      ] 
-    },
-    { 
-      "id": "a_stateless", 
-      "text": "In a stateless society, how should social order and coordination be maintained?", 
-      "options": [ 
-        { "text": "Through completely horizontal, decentralized self-management without any rulers or hierarchy.", "next": "anarchism" },
-        { "text": "Under a symbolic, non-governing monarch whose sole function is to defend liberty and prevent the rise of a new state.", "next": "anarcho_monarchism" }
-      ] 
-    },
-    { 
-      "id": "a_gov_model", 
-      "text": "Where should sovereign decision-making power ultimately reside?", 
-      "options": [ 
-        { "text": "In the citizenry bodies.", "next": "a_popular" },
-        { "text": "In a distinguished elite or capable leadership class selected by merit, expertise, or duty.", "next": "a_elite" },
-        { "text": "In a concentrated supreme leader, executive authority, or governing corporate body.", "next": "a_concentrated" }
-      ] 
+    {
+      "id": "civil_liberalism"
     },
     {
-      "id": "a_popular",
-      "text": "Through what mechanism should citizens exercise constitutional sovereignty?",
+      "id": "progressivism"
+    },
+    {
+      "id": "social_progressivism"
+    },
+    {
+      "id": "postmodernism"
+    },
+    {
+      "id": "conservatism"
+    },
+    {
+      "id": "progressive_conservatism"
+    },
+    {
+      "id": "liberal_conservatism"
+    },
+    {
+      "id": "conservative_liberalism"
+    },
+    {
+      "id": "traditionalist_conservatism"
+    },
+    {
+      "id": "paleoconservatism"
+    },
+    {
+      "id": "religious_traditionalism"
+    },
+    {
+      "id": "perennial_traditionalism"
+    },
+    {
+      "id": "reactionaryism"
+    },
+    {
+      "id": "neoreactionaryism"
+    },
+    {
+      "id": "reactionary_modernism"
+    },
+    {
+      "id": "alternative_modernism"
+    }
+  ],
+  "authority": [
+    {
+      "id": "a1",
+      "text": "Who should hold final decision-making power?",
       "options": [
         {
-          "text": "Through representative institutions and parliamentary governance where elected officials legislate on behalf of the public.",
-          "next": "a_parliamentary"
+          "text": "All citizens, directly or through elected representatives",
+          "next": "a_citizens"
         },
         {
-          "text": "Through direct democracy, where citizens make decisions directly via referendums, councils, or popular assemblies.",
-          "next": "a_direct"
+          "text": "A monarch or a hereditary ruling class",
+          "next": "a_hereditary"
+        },
+        {
+          "text": "Those with expertise, proven ability or military command",
+          "next": "a_qualified"
+        },
+        {
+          "text": "One leader, one party, or a religious or moral authority",
+          "next": "a_single"
+        },
+        {
+          "text": "No one: the state is kept minimal or absent",
+          "next": "a_none"
         }
       ]
     },
     {
-      "id": "a_parliamentary",
-      "text": "How should this representative parliamentary system be organized?",
+      "id": "a_citizens",
+      "text": "How should citizens exercise power?",
       "options": [
         {
-          "text": "Citizens elect representatives to debate and enact legislation within a constitutional republic.",
+          "text": "Elect representatives to pass laws and govern on their behalf",
           "next": "representative_democracy"
         },
         {
-          "text": "An elected parliament shares authority with a hereditary monarch bound by constitutional law.",
-          "next": "constitutional"
+          "text": "Vote directly on laws and policies through referendums",
+          "next": "referendum_democracy"
+        },
+        {
+          "text": "Take part continuously through open digital platforms and online voting",
+          "next": "digital_democracy"
+        },
+        {
+          "text": "Elected councils of workers, peasants and soldiers hold power",
+          "next": "councilism"
+        },
+        {
+          "text": "Face-to-face neighborhood and town assemblies that join together by confederation",
+          "next": "communalism"
         }
       ]
     },
     {
-      "id": "a_direct",
-      "text": "What form should this direct democratic governance take?",
+      "id": "a_hereditary",
+      "text": "What form should hereditary rule take?",
       "options": [
         {
-          "text": "Citizens decide policy directly through popular initiatives, referendums, and ballot measures.",
-          "next": "referendum_democracy"
+          "text": "A monarch with supreme power, unrestricted by law or custom",
+          "next": "absolute"
         },
         {
-          "text": "Power is vested in directly elected workers', peasants', or soldiers' councils.",
-          "next": "councilism"
+          "text": "A monarch limited by a constitution, often a symbolic head of state",
+          "next": "constitutional"
         },
         {
-          "text": "Citizens govern directly through neighborhood and municipal popular assemblies that confederate regionally.",
-          "next": "communalism"
-        },
-        {
-          "text": "Governance is managed through digital platforms, open networks, and electronic direct democracy.",
-          "next": "digital_democracy"
+          "text": "A ruling class distinguished by inherited status, education and land-based stakes",
+          "next": "aristocracy"
         }
       ]
     },
-    { 
-      "id": "a_elite", 
-      "text": "What qualification should grant this elite leadership class the right to govern?", 
-      "options": [ 
-        { "text": "Scientific expertise, engineering competence, and data-driven management.", "next": "technocracy" },
-        { "text": "Demonstrated talent, individual achievement, and intellectual competence proven in fair competition.", "next": "meritocracy" },
-        { "text": "Inherited noble birth, historical lineage, and rooted stewardship of society.", "next": "aristocracy" },
-        { "text": "Command within the military hierarchy, martial discipline, and strategic leadership.", "next": "stratocracy" }
-      ] 
+    {
+      "id": "a_qualified",
+      "text": "What should qualify people to rule?",
+      "options": [
+        {
+          "text": "Scientific and technical expertise in the relevant field",
+          "next": "technocracy"
+        },
+        {
+          "text": "Demonstrated ability and talent, proven in fair competition",
+          "next": "meritocracy"
+        },
+        {
+          "text": "Command within the military, with the military and the state as one",
+          "next": "stratocracy"
+        },
+        {
+          "text": "Professional management of the state like a company, answerable to shareholders",
+          "next": "neocameralism"
+        }
+      ]
     },
-    { 
-      "id": "a_concentrated", 
-      "text": "What is the institutional basis of this centralized executive power?", 
-      "options": [ 
-        { "text": "A sacred or hereditary mandate rooted in dynastic bloodline or religious law.", "next": "a_trad_relig" },
-        { "text": "A modern political strongman, ideological vanguard, or centralized state apparatus.", "next": "a_secular_auth" },
-        { "text": "A joint-stock enterprise where governance is managed by an appointed CEO and board of directors.", "next": "neocameralism" }
-      ] 
+    {
+      "id": "a_single",
+      "text": "Which kind of ruler should it be?",
+      "options": [
+        {
+          "text": "One person with absolute power, restrained by no law or popular control",
+          "next": "autocracy"
+        },
+        {
+          "text": "One party that dominates the state and the political process",
+          "next": "partocracy"
+        },
+        {
+          "text": "A state treated as the highest moral authority, uniting individuals in a higher whole",
+          "next": "ethical_statism"
+        },
+        {
+          "text": "Religious leaders ruling in the name of a deity",
+          "next": "theocracy"
+        },
+        {
+          "text": "A ruler who defends one religion to unify the state and suppress dissent",
+          "next": "religious_authoritarianism"
+        }
+      ]
     },
-    { 
-      "id": "a_trad_relig", 
-      "text": "What is the nature of this traditional or religious sovereign authority?", 
-      "options": [ 
-        { "text": "A hereditary monarch holding undivided autocratic power by dynastic right.", "next": "absolute" },
-        { "text": "The state is governed directly by the clergy or priesthood administering sacred religious law.", "next": "theocracy" },
-        { "text": "A secular ruler whose political authority is legitimized by enforcing and protecting religious orthodoxy.", "next": "religious_authoritarianism" }
-      ] 
+    {
+      "id": "a_none",
+      "text": "How little government should there be?",
+      "options": [
+        {
+          "text": "A minimal state that only protects against aggression, theft and broken contracts",
+          "next": "minarchism"
+        },
+        {
+          "text": "No state and no rulers: a self-governed society of voluntary institutions",
+          "next": "anarchism"
+        },
+        {
+          "text": "No state, but a symbolic monarch who protects liberty and prevents a new state",
+          "next": "anarcho_monarchism"
+        }
+      ]
     },
-    { 
-      "id": "a_secular_auth", 
-      "text": "How should this centralized executive power be organized and wielded?", 
-      "options": [ 
-        { "text": "Through a single revolutionary vanguard party that directs the state and mobilizes the working class.", "next": "partocracy" },
-        { "text": "Through a concentrated autocrat who exercises firm political control over the state apparatus.", "next": "autocracy" },
-        { "text": "Through an ethical state that acts as the ultimate moral authority and spiritual organism uniting the nation.", "next": "ethical_statism" }
-      ] 
+    {
+      "id": "representative_democracy"
     },
-    { "id": "theocracy" },
-    { "id": "absolute" },
-    { "id": "constitutional" },
-    { "id": "ethical_statism" },
-    { "id": "religious_authoritarianism" },
-    { "id": "autocracy" },
-    { "id": "anarchism" },
-    { "id": "minarchism" },
-    { "id": "partocracy" },
-    { "id": "meritocracy" },
-    { "id": "technocracy" },
-    { "id": "representative_democracy" },
-    { "id": "referendum_democracy" },
-    { "id": "councilism" },
-    { "id": "communalism" },
-    { "id": "digital_democracy" },
-    { "id": "stratocracy" },
-    { "id": "aristocracy" },
-    { "id": "anarcho_monarchism" },
-    { "id": "neocameralism" }
+    {
+      "id": "referendum_democracy"
+    },
+    {
+      "id": "digital_democracy"
+    },
+    {
+      "id": "councilism"
+    },
+    {
+      "id": "communalism"
+    },
+    {
+      "id": "absolute"
+    },
+    {
+      "id": "constitutional"
+    },
+    {
+      "id": "aristocracy"
+    },
+    {
+      "id": "technocracy"
+    },
+    {
+      "id": "meritocracy"
+    },
+    {
+      "id": "stratocracy"
+    },
+    {
+      "id": "neocameralism"
+    },
+    {
+      "id": "autocracy"
+    },
+    {
+      "id": "partocracy"
+    },
+    {
+      "id": "ethical_statism"
+    },
+    {
+      "id": "theocracy"
+    },
+    {
+      "id": "religious_authoritarianism"
+    },
+    {
+      "id": "minarchism"
+    },
+    {
+      "id": "anarchism"
+    },
+    {
+      "id": "anarcho_monarchism"
+    }
   ],
   "nation": [
     {
       "id": "n1",
-      "text": "What should be the legitimate basis for defining borders, citizenship, and political community?",
+      "text": "Who should count as \"us\" in your political community?",
       "options": [
         {
-          "text": "National borders and collective identity should be rejected in favor of personal autonomy or borderless universalism.",
-          "next": "n_anti_nation"
+          "text": "Individuals and small groups: yourself, your local community, or your kin",
+          "next": "n_small"
         },
         {
-          "text": "Belonging should be defined through shared values or local civic solidarity.",
-          "next": "n_civic_cultural"
+          "text": "A nation, bound by shared citizenship, culture, faith or national spirit",
+          "next": "n_nation"
         },
         {
-          "text": "Belonging must be rooted in ancestral bloodlines, ethnic heritage, and biological lineage.",
-          "next": "n_ancestral"
+          "text": "A people of shared ancestry, ethnic or racial",
+          "next": "n_ancestry"
+        },
+        {
+          "text": "A wider world: all humanity, a civilization, or related peoples across borders",
+          "next": "n_wider"
         }
       ]
     },
     {
-      "id": "n_anti_nation",
-      "text": "On what principle should society operate without national identity or state borders?",
+      "id": "n_small",
+      "text": "Which group should come first?",
       "options": [
         {
-          "text": "Radical individual sovereignty: the nation is an oppressive abstraction ('spook'); individuals owe no allegiance to any collective and act purely on self-interest.",
+          "text": "Only the individual: no state, nation or moral duty binds me",
           "next": "egoism"
         },
         {
-          "text": "Universal cosmopolitanism: all human beings belong to a single borderless global community with equal rights across the planet.",
-          "next": "Cosmopolitanism"
-        }
-      ]
-    },
-    {
-      "id": "n_civic_cultural",
-      "text": "What is the primary anchor of this political and social cohesion?",
-      "options": [
-        {
-          "text": "Equal constitutional rights, the rule of law, and shared political citizenship regardless of ethnic origin.",
-          "next": "civic_nationalism"
-        },
-        {
-          "text": "Belonging belongs to face-to-face neighborhoods, towns, and organic civic communities.",
+          "text": "The local community and its shared values",
           "next": "communitarianism"
         },
         {
-          "text": "A shared cultural, religious, or civilizational heritage.",
-          "next": "n_heritage_basis"
+          "text": "Kinship, lineage and ancient tribal bonds, not the nation",
+          "next": "Tribalism"
         }
       ]
     },
     {
-      "id": "n_heritage_basis",
-      "text": "What core foundation defines this shared cultural or civilizational sphere?",
+      "id": "n_nation",
+      "text": "What should bind the nation together?",
       "options": [
         {
-          "text": "Shared language, historical customs, and institutional national culture.",
+          "text": "Shared political values and citizenship, regardless of ethnicity",
+          "next": "civic_nationalism"
+        },
+        {
+          "text": "Shared language, traditions and heritage",
           "next": "cultural_nationalism"
         },
         {
-          "text": "A common religious faith, theological heritage, and confessional moral unity.",
+          "text": "Adherence to one shared religious tradition",
           "next": "religious_nationalism"
         },
         {
-          "text": "Living folklore, heroic national mythology, ancestral soul, and romantic national awakening.",
+          "text": "The nation's ancestral spirit, folklore and mythology",
           "next": "romantic_nationalism"
-        },
-        {
-          "text": "An overarching civilizational sphere, cultural realm, or continental bloc bridging related peoples.",
-          "next": "civilizationism"
         }
       ]
     },
     {
-      "id": "n_ancestral",
-      "text": "At what scale should shared ancestry and blood ties organize society?",
+      "id": "n_ancestry",
+      "text": "How should shared ancestry define the people?",
       "options": [
         {
-          "text": "In organic, decentralized clans and close-knit local tribal kinship groups.",
-          "next": "Tribalism"
-        },
-        {
-          "text": "In a sovereign nation-state centered on a distinct historical ethnic group tied to a homeland.",
+          "text": "A nation of one ethnic group with shared descent and a homeland",
           "next": "ethnic_nationalism"
         },
         {
-          "text": "Across broader supra-national, continental, or racial collectives.",
-          "next": "n_macro_lineage"
-        }
-      ]
-    },
-    {
-      "id": "n_macro_lineage",
-      "text": "How broad should this ancestral collective extend?",
-      "options": [
-        {
-          "text": "A pan-national federation or union uniting sister ethnic groups across state borders.",
-          "next": "pan_nationalism"
-        },
-        {
-          "text": "The entire race as a single biological collective prioritizing racial solidarity and preservation.",
+          "text": "A people defined by race, with that race's preservation as the goal",
           "next": "racial_nationalism"
         }
       ]
     },
-    { "id": "Cosmopolitanism" },
-    { "id": "civic_nationalism" },
-    { "id": "cultural_nationalism" },
-    { "id": "religious_nationalism" },
-    { "id": "ethnic_nationalism" },
-    { "id": "pan_nationalism" },
-    { "id": "racial_nationalism" },
-    { "id": "Tribalism" },
-    { "id": "egoism" },
-    { "id": "communitarianism" },
-    { "id": "romantic_nationalism" },
-    { "id": "civilizationism" }
+    {
+      "id": "n_wider",
+      "text": "Which wider community should come first?",
+      "options": [
+        {
+          "text": "All human beings, sharing one morality beyond borders",
+          "next": "Cosmopolitanism"
+        },
+        {
+          "text": "A civilizational sphere: a shared cultural world spanning several nations",
+          "next": "civilizationism"
+        },
+        {
+          "text": "Related peoples unified into one nation across existing borders",
+          "next": "pan_nationalism"
+        }
+      ]
+    },
+    {
+      "id": "egoism"
+    },
+    {
+      "id": "communitarianism"
+    },
+    {
+      "id": "Tribalism"
+    },
+    {
+      "id": "civic_nationalism"
+    },
+    {
+      "id": "cultural_nationalism"
+    },
+    {
+      "id": "religious_nationalism"
+    },
+    {
+      "id": "romantic_nationalism"
+    },
+    {
+      "id": "ethnic_nationalism"
+    },
+    {
+      "id": "racial_nationalism"
+    },
+    {
+      "id": "Cosmopolitanism"
+    },
+    {
+      "id": "civilizationism"
+    },
+    {
+      "id": "pan_nationalism"
+    }
   ],
   "foreign": [
     {
       "id": "f1",
-      "text": "What general orientation should our foreign policy pursue?",
+      "text": "How should the country act toward other countries?",
       "options": [
-        { "text": "Avoid foreign entanglements and prioritize neutrality", "next": "f_neutral" },
-        { "text": "Pursue national power and strategic self-interest", "next": "f_power" },
-        { "text": "Foster international cooperation and global engagement", "next": "f_coop" }
+        {
+          "text": "Stay out of other countries' affairs and conflicts",
+          "next": "f_out"
+        },
+        {
+          "text": "Pursue its own power and interests abroad",
+          "next": "f_power"
+        },
+        {
+          "text": "Work with other countries and peoples",
+          "next": "f_coop"
+        }
       ]
     },
     {
-      "id": "f_neutral",
-      "text": "How should our independence from foreign conflicts be maintained?",
+      "id": "f_out",
+      "text": "How should it stay out?",
       "options": [
-        { "text": "Sever all political, military, and significant economic ties", "next": "Isolationism" },
-        { "text": "Trade and communicate peacefully while staying out of foreign wars", "next": "f_neutral_type" }
-      ]
-    },
-    {
-      "id": "f_neutral_type",
-      "text": "What should safeguard our neutrality?",
-      "options": [
-        { "text": "Strict diplomatic restraint and complete avoidance of foreign alliances", "next": "Non_Interventionism" },
-        { "text": "A strong, well-armed national defense to deter any foreign aggression", "next": "armed_neutrality" }
+        {
+          "text": "Cut off political, military and most economic ties",
+          "next": "Isolationism"
+        },
+        {
+          "text": "Trade and talk peacefully, avoiding alliances and wars that are not self-defense",
+          "next": "Non_Interventionism"
+        },
+        {
+          "text": "Take no side in conflicts, but keep a strong military to defend sovereignty",
+          "next": "armed_neutrality"
+        }
       ]
     },
     {
       "id": "f_power",
-      "text": "How should our country exert influence on the world stage?",
+      "text": "By what means should it pursue its interests?",
       "options": [
-        { "text": "By pragmatically balancing power and alliances to maximize national interest", "next": "Realpolitik" },
-        { "text": "By expanding territorial control and dominating foreign resources", "next": "Imperialism" }
+        {
+          "text": "Practical calculation of interests and alliances, not moral or ideological goals",
+          "next": "Realpolitik"
+        },
+        {
+          "text": "Extending its power over other territories by diplomacy, economic dominance or force",
+          "next": "Imperialism"
+        },
+        {
+          "text": "Proactively influencing other countries' politics or economy",
+          "next": "Interventionism"
+        }
       ]
     },
     {
       "id": "f_coop",
-      "text": "What is the primary aim of our global engagement?",
+      "text": "What form should cooperation take?",
       "options": [
-        { "text": "Maintaining international order, rights, and systemic integration", "next": "f_global_order" },
-        { "text": "Fostering mutual solidarity and partnership across borders", "next": "f_solidarity" }
+        {
+          "text": "Plan policy on a global basis, favoring free trade and international cooperation",
+          "next": "Globalism"
+        },
+        {
+          "text": "Closer cooperation among sovereign nations for the common good",
+          "next": "Internationalism"
+        },
+        {
+          "text": "Global solidarity that opposes corporate globalization and economic exploitation",
+          "next": "alter_globalism"
+        }
       ]
     },
     {
-      "id": "f_global_order",
-      "text": "Through what mechanism should global order be maintained?",
-      "options": [
-        { "text": "Proactively intervening abroad to stop bad actors and defend human rights", "next": "Interventionism" },
-        { "text": "Integrating into a unified world system of open borders and supranational law", "next": "Globalism" }
-      ]
+      "id": "Isolationism"
     },
     {
-      "id": "f_solidarity",
-      "text": "How should international cooperation be structured?",
-      "options": [
-        { "text": "Multilateral diplomacy between sovereign, independent nation-states", "next": "Internationalism" },
-        { "text": "Worldwide grassroots solidarity opposing corporate globalization and exploitation", "next": "alter_globalism" }
-      ]
+      "id": "Non_Interventionism"
     },
-    { "id": "Isolationism" },
-    { "id": "Non_Interventionism" },
-    { "id": "armed_neutrality" },
-    { "id": "Realpolitik" },
-    { "id": "Imperialism" },
-    { "id": "Interventionism" },
-    { "id": "Globalism" },
-    { "id": "Internationalism" },
-    { "id": "alter_globalism" }
+    {
+      "id": "armed_neutrality"
+    },
+    {
+      "id": "Realpolitik"
+    },
+    {
+      "id": "Imperialism"
+    },
+    {
+      "id": "Interventionism"
+    },
+    {
+      "id": "Globalism"
+    },
+    {
+      "id": "Internationalism"
+    },
+    {
+      "id": "alter_globalism"
+    }
   ],
   "technology": [
     {
       "id": "t1",
-      "text": "What direction should society take with technology and production?",
+      "text": "What should society's attitude to technology be?",
       "options": [
         {
-          "text": "Step away from heavy machinery in favor of rural or low-tech living",
-          "next": "t_rural"
+          "text": "Limit it, to protect human scale, rural life and nature",
+          "next": "t_limit"
         },
         {
-          "text": "Focus on standard manufacturing, digital services, and environmental balance",
-          "next": "t_standard"
+          "text": "Use it pragmatically, balancing prosperity, practicality and the environment",
+          "next": "t_tool"
         },
         {
-          "text": "Develop advanced technologies to reshape the future",
-          "next": "t_future"
+          "text": "Use advanced technology to enhance humanity and heal the Earth",
+          "next": "t_advanced"
+        },
+        {
+          "text": "Let it accelerate as far and as fast as it can go",
+          "next": "t_accelerate"
         }
       ]
     },
     {
-      "id": "t_rural",
-      "text": "How should society live away from heavy machine industry?",
+      "id": "t_limit",
+      "text": "How far should technology be limited?",
       "options": [
         {
-          "text": "Build community life around farming, rural culture, and working the land",
-          "next": "agrarianism"
+          "text": "Dismantle technological civilization and return to wild, hunter-gatherer living",
+          "next": "primitivism"
         },
         {
-          "text": "Rely on local artisan craft and hand tools while rejecting automation",
+          "text": "Keep it local, craft-based and human-scale, opposing automation and hyper-industrialism",
           "next": "neoluddism"
         },
         {
-          "text": "Abandon civilization and farming entirely to return to hunter-gatherer life",
-          "next": "primitivism"
-        }
-      ]
-    },
-    {
-      "id": "t_standard",
-      "text": "What should be the main priority for everyday industry and technology?",
-      "options": [
-        {
-          "text": "Protecting natural habitats and balancing industrial activity with the environment",
-          "next": "t_eco"
+          "text": "Center life on farming, land stewardship and rural communities",
+          "next": "agrarianism"
         },
         {
-          "text": "Developing manufacturing, digital infrastructure, and practical everyday tools",
-          "next": "t_production"
-        }
-      ]
-    },
-    {
-      "id": "t_eco",
-      "text": "How should we maintain environmental balance?",
-      "options": [
-        {
-          "text": "Set aside protected wilderness and strictly limit human development",
+          "text": "Protect wild nature through legal wilderness zones and strict ecological limits",
           "next": "conservationism"
-        },
-        {
-          "text": "Regulate industry with renewable energy, recycling, and sustainable practices",
-          "next": "environmentalism"
         }
       ]
     },
     {
-      "id": "t_production",
-      "text": "What kind of economy and tools should we focus on?",
+      "id": "t_tool",
+      "text": "What should guide how technology is used?",
       "options": [
         {
-          "text": "Prioritize heavy manufacturing, factories, machine shops, and raw material extraction",
+          "text": "Technology is morally neutral: use it whenever it serves people",
+          "next": "instrumentalism"
+        },
+        {
+          "text": "Balance prosperity with environmental health through regulation, renewables and recycling",
+          "next": "environmentalism"
+        },
+        {
+          "text": "Large-scale manufacturing, energy and infrastructure to maximize material abundance",
           "next": "industrialism"
         },
         {
-          "text": "Shift away from heavy manufacturing toward an information, digital, and service economy",
+          "text": "An economy led by services, electronics and communication technologies",
           "next": "post_industrialism"
-        },
-        {
-          "text": "Treat technology simply as a neutral tool to solve practical everyday problems",
-          "next": "instrumentalism"
         }
       ]
     },
     {
-      "id": "t_future",
-      "text": "Where should advanced high-tech development be directed?",
+      "id": "t_advanced",
+      "text": "What should advanced technology be used for?",
       "options": [
         {
-          "text": "Restoring the biosphere, enhancing human biology, or surpassing physical limits",
-          "next": "t_future_bio_eco"
-        },
-        {
-          "text": "Automating all production to eliminate scarcity and expanding into space",
-          "next": "t_mastery"
-        },
-        {
-          "text": "Unleashing technological acceleration as an unstoppable force beyond human control",
-          "next": "t_runaway"
-        }
-      ]
-    },
-    {
-      "id": "t_future_bio_eco",
-      "text": "How should advanced science transform living systems and the planet?",
-      "options": [
-        {
-          "text": "Use clean nuclear power, synthetic food, and compact cities so nature can rewild",
+          "text": "Concentrate human activity with nuclear power and synthetic biology so nature can rewild",
           "next": "ecomodernism"
         },
         {
-          "text": "Enhance human bodies and minds with cybernetics, gene editing, and extended lifespans",
+          "text": "Heal the biosphere with biotechnology, geoengineering and space industry",
+          "next": "technogaianism"
+        },
+        {
+          "text": "Enhance human intellect and bodies through cybernetics, genetics and life extension",
           "next": "transhumanism"
         },
         {
-          "text": "Leave biology behind entirely and upload human minds into synthetic superintelligence",
+          "text": "Move beyond biological humanity to synthetic minds and post-biological life",
           "next": "posthumanism"
-        },
-        {
-          "text": "Deploy genetic engineering, geoengineering, and clean biotech to repair ecosystems",
-          "next": "technogaianism"
         }
       ]
     },
     {
-      "id": "t_mastery",
-      "text": "What is the ultimate goal of human technological mastery?",
+      "id": "t_accelerate",
+      "text": "Why should technology accelerate?",
       "options": [
         {
-          "text": "Automate all production to eliminate scarcity and free humans from compulsory labor",
+          "text": "Full human mastery of nature, ending scarcity and the need for human labor through automation",
           "next": "prometheanism"
         },
         {
-          "text": "Expand endlessly across the solar system and maximize cosmic energy capture",
-          "next": "extropianism"
-        }
-      ]
-    },
-    {
-      "id": "t_runaway",
-      "text": "How should we view runaway technological growth?",
-      "options": [
-        {
-          "text": "Speed up market competition and computing power so they outrun government regulation",
+          "text": "Markets and technology evolve together as a self-reinforcing force that outruns regulation",
           "next": "technocapitalism"
         },
         {
-          "text": "Accept that technological acceleration is an unstoppable physical process that cannot be controlled",
+          "text": "Intelligence should expand without limit through energy, computation and space colonization",
+          "next": "extropianism"
+        },
+        {
+          "text": "Acceleration is an unstoppable process beyond human control or moral direction",
           "next": "techno_fatalism"
         }
       ]
     },
-    { "id": "agrarianism" },
-    { "id": "neoluddism" },
-    { "id": "primitivism" },
-    { "id": "conservationism" },
-    { "id": "environmentalism" },
-    { "id": "industrialism" },
-    { "id": "post_industrialism" },
-    { "id": "instrumentalism" },
-    { "id": "ecomodernism" },
-    { "id": "transhumanism" },
-    { "id": "posthumanism" },
-    { "id": "technogaianism" },
-    { "id": "prometheanism" },
-    { "id": "extropianism" },
-    { "id": "technocapitalism" },
-    { "id": "techno_fatalism" }
+    {
+      "id": "primitivism"
+    },
+    {
+      "id": "neoluddism"
+    },
+    {
+      "id": "agrarianism"
+    },
+    {
+      "id": "conservationism"
+    },
+    {
+      "id": "instrumentalism"
+    },
+    {
+      "id": "environmentalism"
+    },
+    {
+      "id": "industrialism"
+    },
+    {
+      "id": "post_industrialism"
+    },
+    {
+      "id": "ecomodernism"
+    },
+    {
+      "id": "technogaianism"
+    },
+    {
+      "id": "transhumanism"
+    },
+    {
+      "id": "posthumanism"
+    },
+    {
+      "id": "prometheanism"
+    },
+    {
+      "id": "technocapitalism"
+    },
+    {
+      "id": "extropianism"
+    },
+    {
+      "id": "techno_fatalism"
+    }
   ],
   "social_control": [
     {
       "id": "sc1",
-      "text": "What is the legitimate scope of state authority over an individual's private conduct, personal habits, and lifestyle?",
+      "text": "How far should the state regulate people's private conduct?",
       "options": [
         {
-          "text": "The state must not infringe on individual autonomy; private life and personal choices belong entirely to the individual.",
-          "next": "sc_liberty"
+          "text": "Hardly at all: law should only prevent harm to others",
+          "next": "sc_free"
         },
         {
-          "text": "The state has a duty to guide, regulate, or direct personal behavior for public well-being, morality, or social order.",
-          "next": "sc_intervention"
+          "text": "To protect people's health, safety and security",
+          "next": "sc_protect"
+        },
+        {
+          "text": "To uphold moral and behavioral standards",
+          "next": "sc_standards"
+        },
+        {
+          "text": "Completely, organizing private life around national goals",
+          "next": "sc_total"
         }
       ]
     },
     {
-      "id": "sc_liberty",
-      "text": "What is the most important part of protecting personal freedom?",
+      "id": "sc_free",
+      "text": "What matters most for personal freedom?",
       "options": [
         {
-          "text": "Protecting constitutional rights—like free speech, privacy, and fair trials—while strictly limiting police and government surveillance.",
+          "text": "Constitutional rights: free speech, privacy and fair trials, with limited police powers",
           "next": "civil_libertarianism"
         },
         {
-          "text": "Total lifestyle freedom—the government should never police consensual adult choices, private habits, drugs, or personal vices.",
+          "text": "Consensual adult choices and private habits are never the state's business",
           "next": "permissivism"
         }
       ]
     },
     {
-      "id": "sc_intervention",
-      "text": "What is the primary objective of state intervention into personal conduct?",
+      "id": "sc_protect",
+      "text": "What should this protection rely on?",
       "options": [
         {
-          "text": "Protecting public health, safety, and well-being through regulation and vice deterrents without criminalizing private life.",
+          "text": "Regulation and incentives that guide habits, such as health codes and vice taxes",
           "next": "civic_paternalism"
         },
         {
-          "text": "Defending public decency and moral cohesion by outlawing obscenity, vice, and behaviors that degrade social values.",
+          "text": "Surveillance, data collection and preemptive policing to prevent crime",
+          "next": "securitism"
+        }
+      ]
+    },
+    {
+      "id": "sc_standards",
+      "text": "How should these standards be upheld?",
+      "options": [
+        {
+          "text": "Laws prohibiting vice and obscenity to preserve public decency and family integrity",
           "next": "legal_moralism"
         },
         {
-          "text": "Enforcing public security, behavioral conformity, or systematic collective discipline.",
-          "next": "sc_order"
-        }
-      ]
-    },
-    {
-      "id": "sc_order",
-      "text": "Through what mechanism should social order and collective discipline be maintained?",
-      "options": [
-        {
-          "text": "Preemptive monitoring, intelligence gathering, and mass surveillance to prevent crime and maintain security.",
-          "next": "securitism"
-        },
-        {
-          "text": "Correcting personal habits, enforcing public etiquette, and penalizing antisocial behavior to ensure social cohesion.",
+          "text": "Public etiquette, behavioral metrics and penalties to correct disruptive habits",
           "next": "disciplinarianism"
-        },
-        {
-          "text": "Subordinating personal life and domestic priorities directly to the collective mission of the state.",
-          "next": "sc_regime"
         }
       ]
     },
     {
-      "id": "sc_regime",
-      "text": "How absolute should the subordination of civilian life to the state be?",
+      "id": "sc_total",
+      "text": "How completely should private life be absorbed?",
       "options": [
         {
-          "text": "Mobilizing daily life, youth upbringing, and family responsibilities through mandatory civic service and state duty.",
+          "text": "Mandatory civic or military service and state-directed youth programs",
           "next": "regimentalism"
         },
         {
-          "text": "Eradicating the private sphere entirely: reproduction, thought, and conscience are wholly owned by the collective.",
+          "text": "No private sphere: family, reproduction and conscience are fully absorbed by the state",
           "next": "totalism"
         }
       ]
     },
-    { "id": "civil_libertarianism" },
-    { "id": "permissivism" },
-    { "id": "civic_paternalism" },
-    { "id": "legal_moralism" },
-    { "id": "securitism" },
-    { "id": "disciplinarianism" },
-    { "id": "regimentalism" },
-    { "id": "totalism" }
+    {
+      "id": "civil_libertarianism"
+    },
+    {
+      "id": "permissivism"
+    },
+    {
+      "id": "civic_paternalism"
+    },
+    {
+      "id": "securitism"
+    },
+    {
+      "id": "legal_moralism"
+    },
+    {
+      "id": "disciplinarianism"
+    },
+    {
+      "id": "regimentalism"
+    },
+    {
+      "id": "totalism"
+    }
   ],
   "territorial_organization": [
     {
       "id": "to1",
-      "text": "How should sovereign political authority be distributed across territory and administrative levels?",
+      "text": "At what level should political power mainly rest?",
       "options": [
         {
-          "text": "Power must belong primarily to local communities or sovereign states via voluntary, bottom-up association.",
-          "next": "to_decentralized"
+          "text": "Local communities or sovereign member states, joined by voluntary association",
+          "next": "to_local"
         },
         {
-          "text": "Power should be shared or balanced between regional self-rule and a unifying central framework.",
-          "next": "to_balanced"
+          "text": "Shared between regions and a central government",
+          "next": "to_shared"
         },
         {
-          "text": "Sovereignty must be undivided and concentrated within a unitary national state.",
-          "next": "to_unitary"
+          "text": "A single national government",
+          "next": "to_central"
         }
       ]
     },
     {
-      "id": "to_decentralized",
-      "text": "At what scale should this decentralized sovereignty reside?",
+      "id": "to_local",
+      "text": "How small should the sovereign unit be?",
       "options": [
         {
-          "text": "Directly in self-governing local communes and city assemblies, federating horizontally through recallable delegates.",
+          "text": "Self-governing towns and communes, linked horizontally by recallable delegates",
           "next": "municipalism"
         },
         {
-          "text": "In sovereign cantons, states, or republics joined by treaty with unilateral veto and secession rights.",
+          "text": "Sovereign states or cantons joined by treaty, each keeping veto and secession rights",
           "next": "confederalism"
         }
       ]
     },
     {
-      "id": "to_balanced",
-      "text": "How should power be shared between the national government and the regions?",
+      "id": "to_shared",
+      "text": "How should power be shared?",
       "options": [
         {
-          "text": "A federation where states or provinces have their own constitution, laws, and powers that the central government cannot take away.",
+          "text": "Regions with constitutionally guaranteed powers that the center cannot abolish",
           "next": "federalism"
         },
         {
-          "text": "A single unified country that grants self-rule and local parliaments to specific historical or cultural regions.",
+          "text": "A unified state that grants self-rule to historical regions through devolved parliaments",
           "next": "regionalism"
         }
       ]
     },
     {
-      "id": "to_unitary",
-      "text": "How much control should the national capital have over the rest of the country?",
+      "id": "to_central",
+      "text": "How much should the national capital control?",
       "options": [
         {
-          "text": "A standard unified country with one set of national laws, where local councils and mayors manage everyday town affairs.",
+          "text": "One set of national laws everywhere, with local councils handling everyday local matters",
           "next": "centralism"
         },
         {
-          "text": "Totalitarian erasure of all local identity, regional culture, and local self-rule—every district is micromanaged like a regiment directly from the capital.",
+          "text": "The capital directly runs every district, with uniform rules and no regional autonomy",
           "next": "hypercentralism"
         }
       ]
     },
-    { "id": "municipalism" },
-    { "id": "confederalism" },
-    { "id": "federalism" },
-    { "id": "regionalism" },
-    { "id": "centralism" },
-    { "id": "hypercentralism" }
+    {
+      "id": "municipalism"
+    },
+    {
+      "id": "confederalism"
+    },
+    {
+      "id": "federalism"
+    },
+    {
+      "id": "regionalism"
+    },
+    {
+      "id": "centralism"
+    },
+    {
+      "id": "hypercentralism"
+    }
   ]
 }
