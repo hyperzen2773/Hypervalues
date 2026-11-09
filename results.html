@@ -13,7 +13,7 @@
     <div class="main-container">
         <div class="title-container">
             <h1>HyperValues</h1>
-            <span class="version-text">v3.9</span>
+            <span class="version-text">v3.10</span>
         </div>
 
         <div id="values-container" class="category-list"></div>
@@ -28,6 +28,15 @@
 
         <div class="button-container">
             <button id="clear-button" style="display: none;">Clear all</button>
+            <div id="download-row" class="download-row" style="display: none;">
+                <button id="download-button">Download image</button>
+                <select id="image-scale" aria-label="Image size" title="Image size">
+                    <option value="1">1x</option>
+                    <option value="2">2x</option>
+                    <option value="3">3x</option>
+                </select>
+            </div>
+            <p id="download-note" class="download-note" style="display: none;"></p>
             <button onclick="location.href='index.html'">Back to menu</button>
         </div>
     </div>
@@ -35,6 +44,7 @@
     <script src="data.js"></script>
     <script src="embedding_weights.js"></script>
     <script src="scoring.js"></script>
+    <script src="share_image.js"></script>
     <script>
         const CLOSEST_COUNT = 3;
         let answers = HV.loadAnswers();
@@ -126,6 +136,8 @@
             const touched = categories.some(category => answers[category]);
             panel.style.display = touched ? '' : 'none';
             byId('clear-button').style.display = touched ? '' : 'none';
+            byId('download-row').style.display = touched ? '' : 'none';
+            byId('download-note').style.display = touched ? '' : 'none';
             if (!touched) return;
 
             const ranked = HV.closestIdeologies(answers, null, 1 + CLOSEST_COUNT);
@@ -185,6 +197,37 @@
             renderResults();
             fitNames();
         }
+
+        // Two pictures with the whole result: 1080 x 1920 for phones and 1920 x 1080 for computers,
+        // or 2 or 3 times bigger with the same proportions
+        function showImageSizes() {
+            const k = Number(byId('image-scale').value) || 1;
+            byId('download-note').textContent =
+                `Phone ${1080 * k} \u00d7 ${1920 * k}, computer ${1920 * k} \u00d7 ${1080 * k}`;
+        }
+        byId('image-scale').onchange = showImageSizes;
+        showImageSizes();
+
+        byId('download-button').onclick = async () => {
+            const button = byId('download-button');
+            const label = button.textContent;
+            const wanted = Number(byId('image-scale').value) || 1;
+            button.disabled = true;
+            button.textContent = 'Preparing...';
+            try {
+                const used = await HVImage.download(answers, wanted);
+                if (Object.keys(used).some(kind => used[kind] < wanted)) {
+                    const saved = Object.keys(used)
+                        .map(kind => `${kind} ${HVImage.SIZES[kind].w * used[kind]} \u00d7 ${HVImage.SIZES[kind].h * used[kind]}`)
+                        .join(', ');
+                    alert(`This browser cannot make every picture ${wanted}x bigger. Saved: ${saved}.`);
+                }
+            } catch (e) {
+                alert('The image could not be created in this browser.');
+            }
+            button.textContent = label;
+            button.disabled = false;
+        };
 
         byId('clear-button').onclick = () => {
             if (!confirm('Clear all your values?')) return;

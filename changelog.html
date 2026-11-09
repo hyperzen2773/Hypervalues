@@ -13,6 +13,13 @@
         <h1>Changelog</h1>
 
         <div class="description-box">
+            <h3>3.10 - 08.11.2026</h3>
+            <ul>
+                <li>New Download image button between Clear all and Back to menu. It saves your whole result as two sharp pictures, one for phones (1080 x 1920) and one for computers (1920 x 1080), with the best match, the next closest ones and every value you added, in the font of the site. All value names are the same size, and so are all the numbers. The menu next to the button makes the pictures 2 or 3 times bigger with the same proportions. Your browser may ask to allow two downloads.</li>
+            </ul>
+        </div>
+
+        <div class="description-box">
             <h3>3.9 - 08.11.2026</h3>
             <ul>
                 <li>The closest ideologies are now ranked by an embedding model. A small neural network turns your answers into a point of 32 numbers, each ideology is a point built from its definition, and the ones closest to you rank first. The score is how likely each ideology is given your answers: 0 means no better than chance, +1 means certain. An ideology has no numbers of its own, so a new ideology needs only its definition, no training. It is trained on simulated users generated from the definitions, because there is no real data. On simulated users it finds the right ideology first in 97% of cases when every category is answered (91% for the Naive Bayes model before it), 59% when only about half are (55% before) and 86% when many related values are picked (67% before). With a lot of noise or two ideologies mixed it is only a little better (46% against 43%, 52% against 48%), and with a single value answered it can pick oddly. This is not a fair test, since the model is trained on the same kind of users. If the model fails to load, the plain similarity between your answers and the definitions is used.</li>
