@@ -312,15 +312,15 @@ const HVImage = (function () {
         return y;
     }
 
-    // The address of the page, starting with a capital letter
+    // The address of the page, with a capital letter at the start of its folder: host.github.io/Hypervalues/
     function drawFooter(ctx, th, x, y) {
         if (!/^https?:$/.test(location.protocol)) return;
-        const address = location.host + location.pathname.replace(/[^/]*$/, '');
+        const folder = location.pathname.replace(/[^/]*$/, '').replace(/^\/([^/])/, (all, first) => '/' + first.toUpperCase());
         ctx.fillStyle = th.dim;
         ctx.font = font(REGULAR, 24);
         ctx.textAlign = 'left';
         ctx.textBaseline = 'alphabetic';
-        ctx.fillText(address.charAt(0).toUpperCase() + address.slice(1), x, y);
+        ctx.fillText(location.host + folder, x, y);
     }
 
     // The picture of one kind, `factor` times bigger than 1080 x 1920 or 1920 x 1080 (same proportions)
