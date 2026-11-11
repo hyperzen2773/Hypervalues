@@ -272,7 +272,7 @@ const HVImage = (function () {
             let baseline = y + (bubbleH - blockH) / 2 + name.px * 0.8;
             name.lines.forEach(line => { ctx.fillText(line, x + w / 2, baseline); baseline += lineH; });
             ctx.font = font(REGULAR, scoreSize);
-            ctx.fillText(`(${HV.signed(best.score)})`, x + w / 2, baseline - lineH + 16 + scoreSize);
+            ctx.fillText(`(${HV.percent(best.probability)})`, x + w / 2, baseline - lineH + 16 + scoreSize);
         } else {
             ctx.font = font(BOLD, 56);
             ctx.fillText('No match', x + w / 2, y + bubbleH / 2 + 20);
@@ -295,7 +295,7 @@ const HVImage = (function () {
                 ctx.stroke();
                 ctx.fillStyle = th.text;
                 const label = `${index + 1}.  ${match.label}`;
-                const score = `(${HV.signed(match.score)})`;
+                const score = `(${HV.percent(match.probability)})`;
                 ctx.font = font(REGULAR, 28);
                 const scoreW = ctx.measureText(score).width;
                 const px = fit(ctx, label, w - 70 - scoreW - 20, 32, BOLD);

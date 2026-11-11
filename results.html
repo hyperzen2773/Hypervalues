@@ -13,7 +13,7 @@
     <div class="main-container">
         <div class="title-container">
             <h1>HyperValues</h1>
-            <span class="version-text">v3.10</span>
+            <span class="version-text">v3.11</span>
         </div>
 
         <div id="values-container" class="category-list"></div>
@@ -42,7 +42,6 @@
     </div>
 
     <script src="data.js"></script>
-    <script src="embedding_weights.js"></script>
     <script src="scoring.js"></script>
     <script src="share_image.js"></script>
     <script>
@@ -151,12 +150,12 @@
                 const labelLink = document.createElement('a');
                 labelLink.href = `description.html?id=${encodeURIComponent(best.label)}&type=ideology&compare=1`;
                 labelLink.style.cssText = 'color: inherit; text-decoration: none; display: block;';
-                labelLink.title = `Score ${HV.signed(best.score)} (from \u22121 to +1)`;
+                labelLink.title = `Probability ${HV.percent(best.probability)}`;
                 const labelName = document.createElement('span');
                 setName(labelName, best.label);
                 const labelScore = document.createElement('span');
                 labelScore.className = 'label-score';
-                labelScore.textContent = `(${HV.signed(best.score)})`;
+                labelScore.textContent = `(${HV.percent(best.probability)})`;
                 labelLink.append(labelName, ' ', labelScore);
                 labelDiv.appendChild(labelLink);
 
@@ -174,7 +173,7 @@
                     pill.className = 'closest-pill';
                     pill.href = `description.html?id=${encodeURIComponent(match.label)}&type=ideology&compare=1`;
                     pill.style.setProperty('--pill-color', color);
-                    pill.title = `Score ${HV.signed(match.score)} (from \u22121 to +1)`;
+                    pill.title = `Probability ${HV.percent(match.probability)}`;
 
                     const rank = document.createElement('span');
                     rank.className = 'cp-rank';
@@ -184,7 +183,7 @@
                     setName(name, match.label);
                     const score = document.createElement('span');
                     score.className = 'cp-score';
-                    score.textContent = `(${HV.signed(match.score)})`;
+                    score.textContent = `(${HV.percent(match.probability)})`;
 
                     pill.append(rank, ' ', name, ' ', score);
                     closestList.appendChild(pill);

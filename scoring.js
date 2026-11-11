@@ -1,21 +1,27 @@
-// Shared scoring helpers for results.html, quiz.html and description.html. Load data.js first, and
-// embedding_weights.js (trained by tools/train_embedding.py) for the ranking.
+// Shared scoring helpers for results.html, quiz.html and description.html. Load data.js first.
 //
 // Your answers (see loadAnswers) map a category to the values you added in it, each with how much it matches you,
 // from -1 (opposite) through 0 (neutral) to +1 (match). A category you did not touch is missing.
 //
-// The ideologies are ranked by an embedding model:
-//   - your answers (128 agreements + a flag for each value saying its category was touched) go through a small
-//     network and come out as a point u of 32 numbers;
-//   - an ideology is a point e of 32 numbers too, made from its stances in ideologyScores (data.js, from -1 for
-//     "opposes the value" to +1 for "matches it") times a matrix learned in training. An ideology has no
-//     numbers of its own, so adding one to data.js is enough, no training needed (see tools/train_embedding.py);
-//   - the logit of an ideology is scale * cos(u, e) and a softmax over all ideologies gives its probability p.
-// The score shown is ln(p * n) / ln(n) for n ideologies, at least -1: 0 means no better than chance, +1 means
-// certain. If the weights do not load, the ideologies are ranked by the plain cosine between your answers and
-// their stances instead.
+// The ideologies are ranked by a Bayesian model of how a person holding an ideology would answer. Its stances
+// (ideologyScores in data.js, from -1 for "opposes the value" to +1 for "matches it") are the expected answers.
+// Every value you added counts as an answer, including one you left at 0 (neutral); a value you did not add is not an answer.
+// For an ideology j:
+//   - a value j has a stance on: your answer is that stance plus noise (normal, width tau);
+//   - a value j has no stance on: you added something it never mentions, which is less likely (probability
+//     epsilon, higher when the ideologies closest to j do mention that value). A neutral answer on such a value costs
+//     nothing: an ideology that never mentions a value is not contradicted by someone who is neutral about it;
+//   - which of j's stances you chose to answer: an ideology that lists few values and matches all of them
+//     explains your answers better than one that lists many (the log of the number of possible choices).
+// How wide your noise is, and how often you add values, are not known, so the model averages over several
+// tau and epsilon (BAYES below) instead of picking one. The ideologies are ranked by that average likelihood,
+// from the best to the worst. There is no training and no weights file: adding an ideology or a value to data.js
+// is enough.
+// The number shown is each ideology's probability: its likelihood divided by the sum over all ideologies, with equal chances
+// to start with. It is relative to the other ideologies: answers that fit none of them still give the best one a share.
 // Ties go to the ideology with more values you picked that it holds, then with more values listed, then to the
 // order in data.js. closestIdeologies keeps only ideologies that hold at least one value you picked.
+
 const HV = (function () {
     const categoryOf = {};
     Object.keys(resultsMapping).forEach(cat => {
@@ -102,6 +108,13 @@ const HV = (function () {
     // Score of one value of an ideology against your answer for it, from -1 to +1 (0 if you did not add it):
     // your agreement times the ideology's stance, so matching a value it matches or opposing one it opposes is
     // positive and the other two cases are negative
+    // A probability (0 to 1) as text with one decimal, never 0% or 100% unless it is exactly so
+    function percent(probability) {
+        const value = Math.max(0, Math.min(1, Number(probability) || 0)) * 100;
+        if (value < 0.1) return '<0.1%';
+        if (value > 99.9) return '>99.9%';
+        return value.toFixed(1) + '%';
+    }
     function valueScore(reqVal, answers, stance) {
         const list = answers[categoryOf[reqVal]];
         const entry = list && list.find(item => item.value === reqVal);
@@ -153,131 +166,128 @@ const HV = (function () {
 
     const rounded = score => Math.round(score * 1e9);
 
-    // Higher score first; then more values you picked that it holds; then more values listed.
+    // Higher likelihood first; then more values you picked that it holds; then more values listed.
     // Equal in all: the order in data.js decides.
     function compareItems(a, b) {
-        return (rounded(b.score) - rounded(a.score)) ||
+        return (rounded(b.rankScore) - rounded(a.rankScore)) ||
             (b.identicalCount - a.identicalCount) ||
             (b.totalRequired - a.totalRequired) ||
             (labelOrder[a.label] - labelOrder[b.label]);
     }
 
     // ---------------------------------------------------------------------------------------------
-    // The embedding model (weights: embedding_weights.js)
+    // The Bayesian ranking (built from the stances in data.js when the page loads)
     // ---------------------------------------------------------------------------------------------
-    const net = (function () {
-        if (typeof EMBEDDING_WEIGHTS === 'undefined') return null;
-        try {
-            const w = EMBEDDING_WEIGHTS;
-            const V = w.values.length, D = w.dim, H = w.hidden;
-            if (w.W1.length !== 2 * V || w.W1[0].length !== H || w.W2.length !== H || w.W2[0].length !== D ||
-                w.Ws.length !== V || w.Ws[0].length !== D) return null;
-            const valueIndex = {};
-            w.values.forEach((value, i) => { valueIndex[value] = i; });
-            const labels = Object.keys(labelOrder);
-            const emb = {};
-            labels.forEach(label => {                      // e = stances . Ws, scaled to length 1
-                const e = new Array(D).fill(0);
-                const stances = stancesOf[label] || {};
-                Object.keys(stances).forEach(value => {
-                    const j = valueIndex[value];
-                    if (j === undefined) return;
-                    for (let k = 0; k < D; k++) e[k] += stances[value] * w.Ws[j][k];
-                });
-                const length = Math.sqrt(e.reduce((sum, x) => sum + x * x, 0));
-                emb[label] = length > 0 ? e.map(x => x / length) : e;
-            });
-            return { w, V, D, H, valueIndex, labels, emb };
-        } catch (e) {
-            return null;
-        }
+
+    // tau: width of the noise around a stance; epsilon: chance of adding a value an ideology never mentions
+    // (plus epsilonNear for each share of the nearest ideologies that do mention it). The model averages over
+    // all the combinations. The numbers come from simulated answers, not from real people.
+    const BAYES = { taus: [0.15, 0.3, 0.6, 0.9], epsilons: [0.01, 0.05], epsilonNear: 0.1, neighbours: 5 };
+
+    const model = (function () {
+        const labels = Object.keys(labelOrder);
+        const values = Object.keys(categoryOf);
+        const valueIndex = {};
+        values.forEach((value, i) => { valueIndex[value] = i; });
+        const N = labels.length;
+        const V = values.length;
+        const stance = labels.map(label => {
+            const row = new Float64Array(V);
+            const own = stancesOf[label] || {};
+            Object.keys(own).forEach(value => { if (value in valueIndex) row[valueIndex[value]] = own[value]; });
+            return row;
+        });
+        const listed = stance.map(row => row.reduce((count, s) => count + (s !== 0 ? 1 : 0), 0));
+        const length = stance.map(row => Math.sqrt(row.reduce((sum, s) => sum + s * s, 0)));
+
+        // The ideologies closest to each one, by the cosine between their stances
+        const near = labels.map((label, j) => {
+            const others = [];
+            for (let k = 0; k < N; k++) {
+                if (k === j) continue;
+                let dot = 0;
+                for (let i = 0; i < V; i++) dot += stance[j][i] * stance[k][i];
+                others.push([length[j] > 0 && length[k] > 0 ? dot / (length[j] * length[k]) : -1, k]);
+            }
+            others.sort((a, b) => (b[0] - a[0]) || (a[1] - b[1]));
+            return others.slice(0, BAYES.neighbours).map(pair => pair[1]);
+        });
+
+        // ln of the chance of adding value i to ideology j, for each epsilon
+        const logAdd = BAYES.epsilons.map(epsilon => labels.map((label, j) => {
+            const row = new Float64Array(V);
+            for (let i = 0; i < V; i++) {
+                let share = 0;
+                near[j].forEach(k => { if (stance[k][i] !== 0) share++; });
+                share /= Math.max(1, near[j].length);
+                row[i] = Math.log(Math.min(0.9, Math.max(1e-4, epsilon + BAYES.epsilonNear * share)));
+            }
+            return row;
+        }));
+
+        const logFactorial = [0];
+        for (let k = 1; k <= V; k++) logFactorial[k] = logFactorial[k - 1] + Math.log(k);
+
+        return { labels, valueIndex, N, V, stance, listed, length, logAdd, logFactorial };
     })();
 
-    // The 256 inputs of the user tower: your agreements, then 1 for every value whose category you touched
-    function netInput(answers) {
-        const V = net.V;
-        const x = new Array(2 * V).fill(0);
-        const touched = {};
-        Object.keys(answers).forEach(cat => {
-            (answers[cat] || []).forEach(item => {
-                const j = net.valueIndex[item.value];
-                if (j === undefined) return;
-                x[j] = Math.max(-1, Math.min(1, Number(item.agree) || 0));
-                if (x[j] !== 0) touched[categoryOf[item.value]] = true;
-            });
-        });
-        net.w.values.forEach((value, j) => { if (touched[categoryOf[value]]) x[V + j] = 1; });
-        return x;
-    }
-
-    // Your point u, scaled to length 1; null if you have answered nothing
-    function userVector(answers) {
-        const { w, H, D } = net;
-        const x = netInput(answers);
-        if (!x.some(v => v !== 0)) return null;
-        const h = new Array(H);
-        for (let k = 0; k < H; k++) {
-            let sum = w.b1[k];
-            for (let j = 0; j < x.length; j++) if (x[j] !== 0) sum += x[j] * w.W1[j][k];
-            h[k] = sum > 0 ? sum : 0;
-        }
-        const u = new Array(D);
-        for (let k = 0; k < D; k++) {
-            let sum = w.b2[k];
-            for (let m = 0; m < H; m++) if (h[m] !== 0) sum += h[m] * w.W2[m][k];
-            u[k] = sum;
-        }
-        const length = Math.sqrt(u.reduce((sum, v) => sum + v * v, 0));
-        return length > 0 ? u.map(v => v / length) : null;
-    }
-
-    // Every ideology, best first
-    function rankIdeologiesNet(answers) {
-        const u = userVector(answers);
-        const labels = net.labels;
-        const n = labels.length;
-        const logits = {};
-        labels.forEach(label => {
-            let cosine = 0;
-            if (u) for (let k = 0; k < net.D; k++) cosine += u[k] * net.emb[label][k];
-            logits[label] = net.w.scale * cosine;
-        });
-        const top = Math.max.apply(null, labels.map(label => logits[label]));
-        const sum = labels.reduce((total, label) => total + Math.exp(logits[label] - top), 0);
-        return labels
-            .map(label => {
-                const probability = Math.exp(logits[label] - top) / sum;
-                const score = Math.max(-1, Math.log(probability * n) / Math.log(n));
-                return Object.assign(countsOf(answers, label), { key: label, label, score, logScore: logits[label], probability });
-            })
-            .sort(compareItems);
-    }
-
-    // All that is left if the weights did not load: the plain cosine between your agreements and the stances
-    function rankIdeologiesSimple(answers) {
-        const agree = {};
-        Object.keys(answers).forEach(cat => (answers[cat] || []).forEach(item => {
-            agree[item.value] = Math.max(-1, Math.min(1, Number(item.agree) || 0));
-        }));
-        const mine = Math.sqrt(Object.keys(agree).reduce((sum, value) => sum + agree[value] * agree[value], 0));
-        return Object.keys(stancesOf)
-            .map(label => {
-                const stances = stancesOf[label];
-                let dot = 0;
-                let own = 0;
-                Object.keys(stances).forEach(value => {
-                    own += stances[value] * stances[value];
-                    if (value in agree) dot += stances[value] * agree[value];
-                });
-                const score = mine > 0 && own > 0 ? dot / (mine * Math.sqrt(own)) : 0;
-                return Object.assign(countsOf(answers, label), { key: label, label, score, logScore: score });
-            })
-            .sort(compareItems);
-    }
-
-    // Every ideology, best first
+    // Every ideology, best first. rankScore: ln of the average likelihood; probability: its share among all
+    // ideologies (equal chances to start with), 0 to 1
     function rankIdeologies(answers) {
-        return net ? rankIdeologiesNet(answers) : rankIdeologiesSimple(answers);
+        const given = [];
+        Object.keys(answers).forEach(cat => (answers[cat] || []).forEach(item => {
+            const i = model.valueIndex[item.value];
+            const level = Number(item.agree);
+            if (i === undefined || item.agree === null || item.agree === undefined || !Number.isFinite(level)) return;
+            given.push([i, Math.max(-1, Math.min(1, level))]);
+        }));
+        const { labels, N, stance, listed, logAdd, logFactorial } = model;
+        const combos = BAYES.taus.length * BAYES.epsilons.length;
+        const logCombos = Math.log(combos);
+        const rank = new Array(N);
+        const silent = new Array(BAYES.epsilons.length);
+
+        for (let j = 0; j < N; j++) {
+            let matched = 0;
+            let squares = 0;
+            silent.fill(0);
+            for (let g = 0; g < given.length; g++) {
+                const i = given[g][0];
+                const x = given[g][1];
+                const s = stance[j][i];
+                if (s !== 0) {
+                    matched++;
+                    squares += (x - s) * (x - s);
+                } else if (x !== 0) {
+                    for (let e = 0; e < silent.length; e++) silent[e] += logAdd[e][j][i];
+                }
+            }
+            let likelihood = 0;
+            if (given.length) {
+                const choice = -(logFactorial[listed[j]] - logFactorial[matched] - logFactorial[listed[j] - matched]);
+                const terms = [];
+                BAYES.taus.forEach(tau => {
+                    const perMatch = -Math.log(tau) - 0.5 * Math.log(2 * Math.PI) + Math.log(2);
+                    for (let e = 0; e < silent.length; e++) {
+                        terms.push(-squares / (2 * tau * tau) + matched * perMatch + silent[e] + choice);
+                    }
+                });
+                const top = Math.max.apply(null, terms);
+                likelihood = top + Math.log(terms.reduce((sum, t) => sum + Math.exp(t - top), 0)) - logCombos;
+            }
+            rank[j] = { label: labels[j], rankScore: likelihood };
+        }
+
+        const best = Math.max.apply(null, rank.map(item => item.rankScore));
+        const total = rank.reduce((sum, item) => sum + Math.exp(item.rankScore - best), 0);
+        return rank
+            .map(item => Object.assign(countsOf(answers, item.label), {
+                key: item.label,
+                label: item.label,
+                rankScore: item.rankScore,
+                probability: Math.exp(item.rankScore - best) / total
+            }))
+            .sort(compareItems);
     }
 
     // The best ideologies other than excludeLabel; each must have at least one of your values
@@ -288,7 +298,7 @@ const HV = (function () {
     }
 
     return {
-        categoryOf, loadAnswers, saveAnswers, primaryOf, signed, stancesByCategory, rankIdeologies, closestIdeologies,
+        categoryOf, loadAnswers, saveAnswers, primaryOf, signed, percent, stancesByCategory, rankIdeologies, closestIdeologies,
         valueScore, ringColor
     };
 })();

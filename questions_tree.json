@@ -411,10 +411,6 @@
           "next": "mixed_lvt"
         },
         {
-          "text": "One uniform sales tax on final purchases of new goods",
-          "next": "fair_tax"
-        },
-        {
           "text": "Import duties and customs, with no domestic taxes on citizens",
           "next": "tariff_funding"
         }
@@ -448,9 +444,6 @@
     },
     {
       "id": "mixed_lvt"
-    },
-    {
-      "id": "fair_tax"
     },
     {
       "id": "tariff_funding"
@@ -1103,10 +1096,6 @@
       "text": "What should guide how technology is used?",
       "options": [
         {
-          "text": "Technology is morally neutral: use it whenever it serves people",
-          "next": "instrumentalism"
-        },
-        {
           "text": "Balance prosperity with environmental health through regulation, renewables and recycling",
           "next": "environmentalism"
         },
@@ -1135,10 +1124,6 @@
         {
           "text": "Enhance human intellect and bodies through cybernetics, genetics and life extension",
           "next": "transhumanism"
-        },
-        {
-          "text": "Move beyond biological humanity to synthetic minds and post-biological life",
-          "next": "posthumanism"
         }
       ]
     },
@@ -1177,9 +1162,6 @@
       "id": "conservationism"
     },
     {
-      "id": "instrumentalism"
-    },
-    {
       "id": "environmentalism"
     },
     {
@@ -1196,9 +1178,6 @@
     },
     {
       "id": "transhumanism"
-    },
-    {
-      "id": "posthumanism"
     },
     {
       "id": "prometheanism"
