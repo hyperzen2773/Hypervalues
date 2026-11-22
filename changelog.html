@@ -13,18 +13,16 @@
         <h1>Changelog</h1>
 
         <div class="description-box">
-            <h3>3.14.1 - 21.11.2026</h3>
+            <h3>3.13.3 - 21.11.2026</h3>
             <ul>
-                <li>The epsilon multiplier is softer for people who answer many values, so they are no longer punished too much: epsilon is now epsilon ^ (10 / max(answers, 10)), the same as before for 10 answers or fewer.</li>
+                <li>Added National Radicalism, referring to the Polish National Radical Camp (ONR, 1934), to Third Position. Added its historical description, value combination, color and 23 estimated scoring positions.</li>
             </ul>
         </div>
 
         <div class="description-box">
-            <h3>3.14 - 21.11.2026</h3>
+            <h3>3.13.2 - 21.11.2026</h3>
             <ul>
-                <li>The definitions of all 266 ideologies are rewritten as prose. Every sentence that says an ideology supports or opposes the idea of a value gives its reason and ends with the name of that value in brackets, for example (Corporatism) or (against Representative Democracy); one pair of brackets can hold two names separated by ";".</li>
-                <li>The brackets and the names in them are left out of the text the model reads, so only the prose is used to find similar ideologies and to guess the stances an ideology does not list.</li>
-                <li>New checks for the definitions: tools/check_definitions.py measures richness, difference from other definitions, agreement with own values, independence from other ideology names, the match between brackets and stances, and whether each stance has a reason; tools/check_utility.js measures whether a definition helps the model when an ideology lists only 3 stances. All numbers come from text and simulation, not from real answers.</li>
+                <li>1 ideology is added to Dystopian: Anarcho-Fascism, after Jonas Nilsson's 2017 book Anarcho-Fascism: Nature Reborn, with a definition written in the style of this project, a value set and 18 stances (10 it holds, 8 it opposes). The sources are the author's own definition and published summaries and reviews of the book. There are now 268 ideologies.</li>
             </ul>
         </div>
 
