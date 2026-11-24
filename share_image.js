@@ -251,6 +251,21 @@ const HVImage = (function () {
         ctx.fillStyle = th.dim;
         ctx.font = font(REGULAR, 28);
         ctx.fillText(version, x + titleW + 14, y + (compact ? 50 : 54));
+        if (localStorage.getItem('hvResultMode') === 'custom') {
+            const badgeX = x + titleW + 14 + ctx.measureText(version).width + 18;
+            const badgeY = y + (compact ? 25 : 29);
+            roundRect(ctx, badgeX, badgeY, 112, 34, 17);
+            ctx.fillStyle = th.card;
+            ctx.fill();
+            ctx.strokeStyle = th.border;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            ctx.fillStyle = th.text;
+            ctx.font = font(BOLD, 18);
+            ctx.textAlign = 'center';
+            ctx.fillText('CUSTOM', badgeX + 56, badgeY + 23);
+            ctx.textAlign = 'left';
+        }
         y += compact ? 96 : 100;
 
         const best = ranked[0];

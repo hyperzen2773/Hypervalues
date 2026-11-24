@@ -13,38 +13,25 @@
         <h1>Changelog</h1>
 
         <div class="description-box">
-            <h3>3.14.3 - 24.11.2026</h3>
+            <h3>3.14.2 - 22.11.2026</h3>
             <ul>
-                <li>Custom Pages has a new look made of the site's own parts, and almost all of its explanatory text is gone. Everything is saved as you edit, so there is no Save, no Cancel and no confirmation window; removing something only hides it, and tapping it again restores it.</li>
-                <li>Values and categories are one list, like the results page: tap a tile to edit its name, picture, category and definition on a page that looks like the description page, tap a category title to rename it, and use the plus tiles to add a value, an ideology or a category. A new value or ideology is created as soon as it gets a name.</li>
-                <li>Ideologies are the bubbles of the ideologies page, with a search. An ideology page shows every value by category: tap a value and move the site's own slider to set its stance (0 clears it).</li>
-                <li>Questions are edited in the quiz itself: change the question and the answers where they stand, pick where an answer leads from a list of questions and values (or create a new question from there), mark the first question, and find the removed and unreachable questions as buttons.</li>
-                <li>The results page has three round buttons (edit, import, export) and shows the name of the pack next to the version. Copy and remove all changes moved to the Pack tab. The Normal mode button is gone: Start leaves Custom Pages. The browser's back button works inside the editor.</li>
+                <li>5 philosophy values are added, each with an AI-made icon (marked as such on its page) and a definition: Historical Materialism, Absolute Idealism, Actual Idealism, Positivism and Thomism. There are now 15 philosophy values and 165 values in all.</li>
+                <li>Materialism and idealism now each open a follow-up question. Materialism splits into plain materialism and Historical Materialism; idealism splits into plain idealism, Absolute Idealism (Hegel) and Actual Idealism (Gentile). Positivism is a new option under "How do you decide whether a claim is true?" and Thomism under the question about weighing a promise against a larger good.</li>
+                <li>The new values have estimated stances on the ideologies (Historical Materialism 68, Absolute Idealism 70, Actual Idealism 19, Positivism 75, Thomism 90), set from each ideology's existing philosophy stances, its group and the values it already holds, with named corrections for the clear cases such as Marxism and Italian Fascism. Only stances of 0.3 or more in either direction are listed, because every listed stance slightly lowers an ideology's rank for answers that do not use it. For the 538 value sets that define the ideologies, the best match is the same as before for 470, and the share that rank first for their own defining values went from 218 to 206.</li>
             </ul>
         </div>
 
         <div class="description-box">
-            <h3>3.14.2 - 23.11.2026</h3>
+            <h3>3.13.3 - 21.11.2026</h3>
             <ul>
-                <li>Custom Pages: a new mode where you choose values from a list (or answer the questions) and your answers are kept apart from the normal quiz.</li>
-                <li>Packs: a small file that adds, changes or removes values, ideologies, categories and questions on top of the site's own data. You can import, export and copy a pack, and remove it again. Pictures made in Custom Pages say so.</li>
-                <li>An editor to create and change values, ideologies, categories and the question tree: names, definitions, colors, groups, every stance, the answers of every question and where they lead. You can rename an ideology, move a value to another category, give a value your own SVG picture (only shapes, colors, gradients and color filters are kept; no blur or shadow) and remove or restore categories (when you remove one, its questions can be kept in another category). Removing anything only hides it: nothing else in your pack is changed, answers you gave to a removed value are kept, and Restore brings everything back.</li>
+                <li>Added National Radicalism, referring to the Polish National Radical Camp (ONR, 1934), to Third Position. Added its historical description, value combination, color and 23 estimated scoring positions.</li>
             </ul>
         </div>
 
         <div class="description-box">
-            <h3>3.14.1 - 21.11.2026</h3>
+            <h3>3.13.2 - 21.11.2026</h3>
             <ul>
-                <li>The epsilon multiplier is softer for people who answer many values, so they are no longer punished too much: epsilon is now epsilon ^ (10 / max(answers, 10)), the same as before for 10 answers or fewer.</li>
-            </ul>
-        </div>
-
-        <div class="description-box">
-            <h3>3.14 - 21.11.2026</h3>
-            <ul>
-                <li>The definitions of all 266 ideologies are rewritten as prose. Every sentence that says an ideology supports or opposes the idea of a value gives its reason and ends with the name of that value in brackets, for example (Corporatism) or (against Representative Democracy); one pair of brackets can hold two names separated by ";".</li>
-                <li>The brackets and the names in them are left out of the text the model reads, so only the prose is used to find similar ideologies and to guess the stances an ideology does not list.</li>
-                <li>New checks for the definitions: tools/check_definitions.py measures richness, difference from other definitions, agreement with own values, independence from other ideology names, the match between brackets and stances, and whether each stance has a reason; tools/check_utility.js measures whether a definition helps the model when an ideology lists only 3 stances. All numbers come from text and simulation, not from real answers.</li>
+                <li>1 ideology is added to Dystopian: Anarcho-Fascism, after Jonas Nilsson's 2017 book Anarcho-Fascism: Nature Reborn, with a definition written in the style of this project, a value set and 18 stances (10 it holds, 8 it opposes). The sources are the author's own definition and published summaries and reviews of the book. There are now 268 ideologies.</li>
             </ul>
         </div>
 

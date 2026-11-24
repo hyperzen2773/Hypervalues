@@ -26,8 +26,23 @@
                 localStorage.removeItem('hvMode');      // the normal quiz, not custom mode
                 localStorage.removeItem('quizAnswers');
                 localStorage.removeItem('quizResults');
+                localStorage.removeItem('hvResultMode');
             } catch (e) { /* storage is not available */ }
             location.href = 'results.html';
+        }
+            // Custom Results shares this page: same categories, but values are picked from a visual list
+        const customMode = new URLSearchParams(location.search).get('mode') === 'custom';
+        if (customMode) {
+            document.getElementById('question').innerText = 'You will see a list of categories. In each one, click "Add new value" and pick a value from the visual list; no questions are asked. You can add several values per category and click any value to say how much it matches you, from -1 (opposite) to +1 (match). Your closest ideologies update as you go.';
+        }
+
+        // Custom Results: mark the session as custom once the page's own startQuiz() has cleared the old answers
+        if (typeof startQuiz === 'function') {
+            const originalStartQuiz = startQuiz;
+            startQuiz = function () {
+                originalStartQuiz();
+                try { if (customMode) localStorage.setItem('hvResultMode', 'custom'); else localStorage.removeItem('hvResultMode'); } catch (e) { /* no storage */ }
+            };
         }
     </script>
 </body>
