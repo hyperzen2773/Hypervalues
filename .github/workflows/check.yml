@@ -1,0 +1,13 @@
+# Runs every check of the site on each upload and each pull request
+name: check
+on: [push, pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: for f in tools/check_*.js; do echo "== $f"; node "$f" || exit 1; done
+      - run: node tools/report_blindspots.js --strict
