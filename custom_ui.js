@@ -16,7 +16,22 @@ const HVUI = (function () {
         undo: '<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>',
         link: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3A4 4 0 0 0 11 18.7l1-1"/>',
         back: '<path d="m15 5-7 7 7 7"/>',
-        palette: '<path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 1.4-2.1-.6-1.2.1-2.4 1.5-2.4H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3Z"/><circle cx="8" cy="11" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16" cy="11" r="1"/>'
+        palette: '<path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 1.4-2.1-.6-1.2.1-2.4 1.5-2.4H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3Z"/><circle cx="8" cy="11" r="1"/><circle cx="12" cy="7.5" r="1"/><circle cx="16" cy="11" r="1"/>',
+        why: '<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
+        compare: '<path d="M7 7h13"/><path d="m16 3 4 4-4 4"/><path d="M17 17H4"/><path d="m8 13-4 4 4 4"/>',
+        map: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5Z"/>',
+        tension: '<path d="M13 2 4 14h7l-1 8 9-12h-7Z"/>',
+        lens: '<path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>',
+        mine: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+        start: '<path d="m7 4 13 8-13 8Z"/>',
+        me: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+        tag: '<path d="M3 12 12 3h9v9l-9 9Z"/><circle cx="16.5" cy="7.5" r="1"/>',
+        radar: '<path d="m12 3 8 6-3 10H7L4 9Z"/>',
+        cube: '<path d="m12 2 9 5v10l-9 5-9-5V7Z"/><path d="m3 7 9 5 9-5M12 12v10"/>',
+        save: '<path d="M5 3h12l2 2v16H5Z"/><path d="M8 3v6h7V3M8 21v-7h8v7"/>',
+        minus: '<path d="M5 12h14"/>',
+        browse: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
+        questions: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7"/><path d="M12 17h.01"/>'
     };
     function svg(name) { return '<svg viewBox="0 0 24 24" aria-hidden="true">' + (ICONS[name] || '') + '</svg>'; }
     // a round button with an icon; the words are only for screen readers and the tooltip
@@ -80,6 +95,7 @@ const HVUI = (function () {
             reader.onload = () => {
                 const result = HVPack.parseText(String(reader.result));
                 if (result.errors.length) { toast(result.errors[0], true); return; }
+                if (typeof HVX !== 'undefined') HVX.snapshotPack(true);
                 if (!HVPack.savePack(result.pack)) { toast('The pack could not be saved in this browser.', true); return; }
                 location.reload();
             };

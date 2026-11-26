@@ -13,7 +13,7 @@
     <div class="main-container">
         <div class="title-container">
             <h1>HyperValues</h1>
-            <span class="version-text">v3.14.3</span>
+            <span class="version-text">v3.14.4</span>
         </div>
 
         <div id="values-container" class="category-list"></div>
@@ -44,6 +44,7 @@
     <script src="scoring.js"></script>
     <script src="share_image.js"></script>
     <script src="custom_ui.js"></script>
+    <script src="hvx.js"></script>
     <script src="custom_bar.js"></script>
     <script>
         let answers = HV.loadAnswers();
@@ -216,11 +217,13 @@
 
         byId('clear-button').onclick = () => {
             if (!confirm('Clear all your values?')) return;
+            HVX.keep(answers);
             answers = {};
             HV.clearAnswers();
             render();
         };
 
+        byId('download-row').appendChild(HVUI.round('why', 'Explore', () => { location.href = 'explore.html'; }));
         render();
 
         // after adding a value, the page opens at that category

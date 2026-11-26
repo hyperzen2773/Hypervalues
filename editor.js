@@ -1045,10 +1045,22 @@
         if (HVUI.hasChanges()) HVUI.arm(importButton, 'import', HVUI.importPack); else importButton.onclick = HVUI.importPack;
         tools.appendChild(importButton);
         tools.appendChild(HVUI.round('copy', 'Copy', () => HVUI.copyPack(draft)));
-        tools.appendChild(HVUI.arm(HVUI.round('trash', 'Remove all changes'), 'trash', () => change(pack => {
+        tools.appendChild(HVUI.round('mine', 'History', () => openModal(box => {
+            const list = el('div', 'hv-versions');
+            HVX.packs().forEach((entry, index) => {
+                const card = el('div', 'hv-card');
+                const info = el('a', 'hv-card-main', new Date(entry.t).toLocaleString());
+                info.href = '#';
+                info.onclick = event => { event.preventDefault(); if (HVX.restorePack(index)) location.reload(); };
+                card.appendChild(info);
+                list.appendChild(card);
+            });
+            box.appendChild(list);
+        })));
+        tools.appendChild(HVUI.arm(HVUI.round('trash', 'Remove all changes'), 'trash', () => { HVX.snapshotPack(true); change(pack => {
             const fresh = HVPack.emptyPack(pack.name);
             Object.keys(fresh).forEach(key => { pack[key] = fresh[key]; });
-        })));
+        }); }));
         body.appendChild(tools);
     }
 

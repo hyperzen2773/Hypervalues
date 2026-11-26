@@ -33,3 +33,26 @@ window.addEventListener('DOMContentLoaded', () => {
         document.body.prepend(toggleBtn);
     }
 });
+
+// Keyboard: a link that skips to the page (shown only when focused), and in the quiz 1-9 pick an answer and
+// Backspace or the left arrow go back
+window.addEventListener('DOMContentLoaded', () => {
+    const main = document.querySelector('.main-container');
+    if (main && !document.querySelector('.hv-skip')) {
+        const skip = document.createElement('a');
+        skip.className = 'hv-skip';
+        skip.href = '#';
+        skip.textContent = 'Skip';
+        skip.onclick = event => { event.preventDefault(); main.setAttribute('tabindex', '-1'); main.focus(); };
+        document.body.prepend(skip);
+    }
+});
+window.addEventListener('keydown', event => {
+    const buttons = document.getElementById('buttons');
+    if (!buttons || !document.getElementById('question') || event.ctrlKey || event.metaKey || event.altKey) return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test((event.target && event.target.tagName) || '')) return;
+    const list = buttons.querySelectorAll('button');
+    if (!list.length) return;
+    if (/^[1-9]$/.test(event.key) && list[Number(event.key) - 1] && list.length > Number(event.key)) list[Number(event.key) - 1].click();
+    else if (event.key === 'Backspace' || event.key === 'ArrowLeft') { event.preventDefault(); list[list.length - 1].click(); }
+});
