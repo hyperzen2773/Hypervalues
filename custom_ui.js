@@ -30,6 +30,8 @@ const HVUI = (function () {
         cube: '<path d="m12 2 9 5v10l-9 5-9-5V7Z"/><path d="m3 7 9 5 9-5M12 12v10"/>',
         save: '<path d="M5 3h12l2 2v16H5Z"/><path d="M8 3v6h7V3M8 21v-7h8v7"/>',
         minus: '<path d="M5 12h14"/>',
+        home: '<path d="m3 11 9-8 9 8"/><path d="M5 10v10h14V10"/>',
+        download: '<path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M4 20h16"/>',
         browse: '<rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>',
         questions: '<circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7"/><path d="M12 17h.01"/>'
     };
@@ -44,6 +46,18 @@ const HVUI = (function () {
         node.title = label;
         if (onClick) node.onclick = onClick;
         return node;
+    }
+    // a round button with a short word under it
+    function labeled(name, label, onClick) {
+        const box = document.createElement('div');
+        box.className = 'hv-labeled';
+        const button = round(name, label, onClick);
+        box.appendChild(button);
+        const text = document.createElement('span');
+        text.textContent = label;
+        box.appendChild(text);
+        box.button = button;
+        return box;
     }
     function setIcon(node, name) { node.innerHTML = svg(name); }
 
@@ -116,5 +130,5 @@ const HVUI = (function () {
             toast('This browser did not allow copying.', true);
         }
     }
-    return { svg, round, setIcon, toast, arm, importPack, hasChanges, copyPack };
+    return { svg, round, labeled, setIcon, toast, arm, importPack, hasChanges, copyPack };
 })();

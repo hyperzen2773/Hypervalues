@@ -17,6 +17,7 @@
         </div>
 
         <div id="values-container" class="category-list"></div>
+        <div id="explore-panel" style="display: none;"></div>
 
         <div id="results-panel" class="results-panel" style="display: none;">
             <div id="label"></div>
@@ -25,17 +26,18 @@
             </div>
         </div>
 
-        <div class="button-container">
-            <button id="clear-button" style="display: none;">Clear all</button>
+        <div class="button-container hv-iconrow">
+            <button id="clear-button" class="hv-round" aria-label="Clear all" title="Clear all" style="display: none;"></button>
             <div id="download-row" class="download-row" style="display: none;">
-                <button id="download-button">Download image</button>
+                <button id="download-button" class="hv-round" aria-label="Download image" title="Download image"></button>
                 <select id="image-scale" aria-label="Image size" title="Image size">
                     <option value="1">1x</option>
                     <option value="2">2x</option>
                     <option value="3">3x</option>
                 </select>
             </div>
-            <button onclick="location.href='index.html'">Back to menu</button>
+            <button id="explore-button" class="hv-entry" type="button"></button>
+            <button id="home-button" class="hv-round" aria-label="Back to menu" title="Back to menu" onclick="location.href='index.html'"></button>
         </div>
     </div>
 
@@ -43,13 +45,19 @@
     <script src="pack.js"></script>
     <script src="scoring.js"></script>
     <script src="share_image.js"></script>
+    <script src="slider.js"></script>
     <script src="custom_ui.js"></script>
     <script src="hvx.js"></script>
+    <script src="explore.js"></script>
     <script src="custom_bar.js"></script>
     <script>
         let answers = HV.loadAnswers();
 
         const byId = id => document.getElementById(id);
+        byId('clear-button').innerHTML = HVUI.svg('trash');
+        byId('download-button').innerHTML = HVUI.svg('download');
+        byId('home-button').innerHTML = HVUI.svg('home');
+        byId('explore-button').innerHTML = HVUI.svg('map') + '<span>Explore</span>';
 
         function makeTile(href, title) {
             const tile = document.createElement('a');
@@ -196,10 +204,10 @@
 
         byId('download-button').onclick = async () => {
             const button = byId('download-button');
-            const label = button.textContent;
+            const label = button.innerHTML;
             const wanted = Number(byId('image-scale').value) || 1;
             button.disabled = true;
-            button.textContent = 'Preparing...';
+            button.style.opacity = '0.5';
             try {
                 const used = await HVImage.download(answers, wanted);
                 if (Object.keys(used).some(kind => used[kind] < wanted)) {
@@ -211,7 +219,8 @@
             } catch (e) {
                 alert('The image could not be created in this browser.');
             }
-            button.textContent = label;
+            button.innerHTML = label;
+            button.style.opacity = '';
             button.disabled = false;
         };
 
@@ -223,7 +232,24 @@
             render();
         };
 
-        byId('download-row').appendChild(HVUI.round('why', 'Explore', () => { location.href = 'explore.html'; }));
+        // Explore takes the place of the lists of values while it is open; a link (?r=...) opens it on someone else's values
+        HVExplore.mount(byId('explore-panel'));
+        let exploring = false;
+        function setExplore(on) {
+            exploring = on;
+            byId('values-container').style.display = on ? 'none' : '';
+            byId('explore-panel').style.display = on ? '' : 'none';
+            byId('explore-button').classList.toggle('hv-on', on);
+            if (on) HVExplore.open(); else { answers = HV.loadAnswers(); render(); }
+        }
+        byId('explore-button').onclick = () => setExplore(!exploring);
+        const sharedCode = new URLSearchParams(location.search).get('r');
+        if (sharedCode) {
+            document.body.classList.add('hv-shared');
+            exploring = true;
+            byId('explore-panel').style.display = '';
+            HVExplore.openShared(sharedCode);
+        }
         render();
 
         // after adding a value, the page opens at that category

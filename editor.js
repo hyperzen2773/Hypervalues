@@ -1040,27 +1040,33 @@
         };
         body.appendChild(name);
         const tools = el('div', 'hv-tools');
-        tools.appendChild(HVUI.round('export', 'Export', () => HVPack.download(draft)));
-        const importButton = HVUI.round('import', 'Import');
-        if (HVUI.hasChanges()) HVUI.arm(importButton, 'import', HVUI.importPack); else importButton.onclick = HVUI.importPack;
-        tools.appendChild(importButton);
-        tools.appendChild(HVUI.round('copy', 'Copy', () => HVUI.copyPack(draft)));
-        tools.appendChild(HVUI.round('mine', 'History', () => openModal(box => {
+        tools.appendChild(HVUI.labeled('export', 'Export', () => HVPack.download(draft)));
+        const importBox = HVUI.labeled('import', 'Import');
+        if (HVUI.hasChanges()) HVUI.arm(importBox.button, 'import', HVUI.importPack); else importBox.button.onclick = HVUI.importPack;
+        tools.appendChild(importBox);
+        tools.appendChild(HVUI.labeled('copy', 'Copy', () => HVUI.copyPack(draft)));
+        tools.appendChild(HVUI.labeled('mine', 'History', () => openModal(box => {
             const list = el('div', 'hv-versions');
             HVX.packs().forEach((entry, index) => {
                 const card = el('div', 'hv-card');
-                const info = el('a', 'hv-card-main', new Date(entry.t).toLocaleString());
+                let short = '';
+                try { short = HVPack.summary(JSON.parse(entry.p)); } catch (e) { short = ''; }
+                const info = el('a', 'hv-card-main');
                 info.href = '#';
+                info.appendChild(el('span', 'cp-score', new Date(entry.t).toLocaleString()));
+                if (short) info.appendChild(el('span', 'hv-caption', short));
                 info.onclick = event => { event.preventDefault(); if (HVX.restorePack(index)) location.reload(); };
                 card.appendChild(info);
                 list.appendChild(card);
             });
             box.appendChild(list);
         })));
-        tools.appendChild(HVUI.arm(HVUI.round('trash', 'Remove all changes'), 'trash', () => { HVX.snapshotPack(true); change(pack => {
+        const resetBox = HVUI.labeled('trash', 'Reset');
+        HVUI.arm(resetBox.button, 'trash', () => { HVX.snapshotPack(true); change(pack => {
             const fresh = HVPack.emptyPack(pack.name);
             Object.keys(fresh).forEach(key => { pack[key] = fresh[key]; });
-        }); }));
+        }); });
+        tools.appendChild(resetBox);
         body.appendChild(tools);
     }
 
