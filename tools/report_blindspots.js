@@ -45,7 +45,9 @@ const none = values.filter(v => holders[v] === 0);
 const one = values.filter(v => holders[v] === 1);
 
 const numbers = { ideologies: labels.length, values: values.length, ownFirst: Math.round(1000 * first / labels.length) / 10, ownTop3: Math.round(1000 * top3 / labels.length) / 10, alikePairs: alike.length, heldByNone: none.length, heldByOne: one.length };
-console.log(JSON.stringify(numbers));
+console.log(`${numbers.ideologies} ideologies, ${numbers.values} values.`);
+console.log(`Answered with its own stances, an ideology comes first ${numbers.ownFirst}% of the time and in the first 3 ${numbers.ownTop3}% of the time.`);
+console.log(`${numbers.alikePairs} pairs of ideologies are almost the same; ${numbers.heldByNone} values are held by no ideology and ${numbers.heldByOne} by only one.`);
 const list = (title, items) => { console.log('\n' + title + ' (' + items.length + ')'); items.slice(0, 25).forEach(i => console.log('  ' + i)); if (items.length > 25) console.log('  ...'); };
 list('Ideologies that do not come first with their own stances', notFirst);
 list('Ideologies that are almost the same', alike.map(p => p[0] + ' / ' + p[1] + ' (' + p[2].toFixed(3) + ')'));
