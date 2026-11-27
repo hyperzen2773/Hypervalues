@@ -292,13 +292,12 @@ const HVX = (function () {
     function packs() { try { const list = JSON.parse(localStorage.getItem(PACKS_KEY) || '[]'); return Array.isArray(list) ? list : []; } catch (e) { return []; } }
     function snapshotPack(force) {
         if (typeof HVPack === 'undefined') return;
-        let stored = null;
-        try { stored = HVPack.storedPack(); } catch (e) { stored = null; }
-        if (!stored) return;
-        const text = JSON.stringify(stored);
         let all = packs();
+        if (!force && all.length && Date.now() - all[0].t < 120000) return;   // cheap: no reading of the pack
+        let text = null;
+        try { text = localStorage.getItem('hvPack'); } catch (e) { text = null; }
+        if (!text) return;
         if (all.length && all[0].p === text) return;
-        if (!force && all.length && Date.now() - all[0].t < 120000) return;
         all.unshift({ t: Date.now(), p: text });
         all = all.slice(0, 15);
         while (all.length > 1 && JSON.stringify(all).length > 1500000) all.pop();
